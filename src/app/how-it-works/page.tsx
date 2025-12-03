@@ -11,6 +11,7 @@ import {
   CheckCircle,
 } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
+import { PageHero } from '@/components/layout/PageHero'
 
 export const metadata: Metadata = {
   title: 'How It Works | High Road Technologies',
@@ -98,19 +99,10 @@ const requirements = [
 export default function HowItWorksPage() {
   return (
     <div>
-      {/* Hero */}
-      <section className="bg-primary-700 text-white py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">
-              How Our Program Works
-            </h1>
-            <p className="text-xl text-gray-200">
-              From application to ownership, we&apos;ve designed every step to be simple, transparent, and focused on your success.
-            </p>
-          </div>
-        </div>
-      </section>
+      <PageHero
+        title="How Our Program Works"
+        subtitle="From application to ownership, we've designed every step to be simple, transparent, and focused on your success."
+      />
 
       {/* Steps */}
       <section className="py-20 bg-white">

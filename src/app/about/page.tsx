@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowRight, Target, Heart, Users, Award } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
+import { PageHero } from '@/components/layout/PageHero'
 
 export const metadata: Metadata = {
   title: 'About Us | High Road Technologies',
@@ -34,19 +35,10 @@ const values = [
 export default function AboutPage() {
   return (
     <div>
-      {/* Hero */}
-      <section className="bg-primary-700 text-white py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">
-              About High Road Technologies
-            </h1>
-            <p className="text-xl text-gray-200">
-              We started High Road with a simple belief: every hardworking driver deserves the opportunity to own their own truck, regardless of their credit history or available cash.
-            </p>
-          </div>
-        </div>
-      </section>
+      <PageHero
+        title="About High Road Technologies"
+        subtitle="We started High Road with a simple belief: every hardworking driver deserves the opportunity to own their own truck, regardless of their credit history or available cash."
+      />
 
       {/* Story */}
       <section className="py-20 bg-white">

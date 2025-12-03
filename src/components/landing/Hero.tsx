@@ -1,11 +1,12 @@
 import Link from 'next/link'
-import { ArrowRight, CheckCircle } from 'lucide-react'
+import { ArrowRight, CheckCircle, Users } from 'lucide-react'
+import { Button } from '@/components/ui/Button'
 
 export function Hero() {
   return (
     <section className="relative bg-primary-700 text-white overflow-hidden">
       {/* Background pattern */}
-      <div className="absolute inset-0 opacity-10">
+      <div className="absolute inset-0 opacity-20">
         <div className="absolute inset-0" style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
         }} />
@@ -13,6 +14,12 @@ export function Hero() {
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
         <div className="max-w-3xl">
+          {/* Trust Badge */}
+          <div className="inline-flex items-center bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 mb-6">
+            <Users className="h-4 w-4 text-accent mr-2" />
+            <span className="text-sm font-medium">Trusted by 500+ Owner-Operators Nationwide</span>
+          </div>
+
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
             Own Your Own Truck.
             <span className="text-accent block">Start for $0 Down.</span>
@@ -37,18 +44,16 @@ export function Hero() {
           </ul>
 
           <div className="flex flex-col sm:flex-row gap-4">
-            <Link
-              href="/apply"
-              className="inline-flex items-center justify-center bg-accent hover:bg-accent-600 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-colors"
-            >
-              Start Your Application
-              <ArrowRight className="ml-2 h-5 w-5" />
+            <Link href="/apply">
+              <Button size="lg" className="w-full sm:w-auto text-lg px-8">
+                Apply in 5 Minutes
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
             </Link>
-            <Link
-              href="/how-it-works"
-              className="inline-flex items-center justify-center border-2 border-white hover:bg-white hover:text-primary-700 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-colors"
-            >
-              Learn How It Works
+            <Link href="/how-it-works">
+              <Button variant="secondary" size="lg" className="w-full sm:w-auto text-lg px-8">
+                Learn How It Works
+              </Button>
             </Link>
           </div>
         </div>

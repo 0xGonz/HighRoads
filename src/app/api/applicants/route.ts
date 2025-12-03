@@ -70,7 +70,7 @@ export async function POST(request: NextRequest) {
       freight_preference: data.freight_preference,
       has_existing_carrier: data.has_existing_carrier,
       carrier_name: data.carrier_name,
-    }, body.contactId) // Pass existing contactId if updating from partial
+    })
 
     return NextResponse.json(
       {

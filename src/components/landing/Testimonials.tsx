@@ -7,29 +7,32 @@ const testimonials = [
   {
     id: 1,
     name: 'Marcus Johnson',
-    role: 'Owner Operator - 2 Years',
-    image: null, // Placeholder
+    role: 'Owner Operator',
+    stats: '2 Years | 185,000 Miles',
     rating: 5,
     quote: 'High Road changed my life. After 10 years of driving for companies, I finally own my truck. The payment plan worked perfectly with my income, and the support team was there every step of the way.',
     location: 'Dallas, TX',
+    gradient: 'from-accent to-orange-400',
   },
   {
     id: 2,
     name: 'Sarah Mitchell',
-    role: 'Owner Operator - 18 Months',
-    image: null,
+    role: 'Owner Operator',
+    stats: '18 Months | 142,000 Miles',
     rating: 5,
     quote: 'I was skeptical at first, but this program delivered on every promise. No hidden fees, great truck selection, and they matched me with an amazing carrier. Best decision I ever made.',
     location: 'Atlanta, GA',
+    gradient: 'from-primary-500 to-primary-400',
   },
   {
     id: 3,
     name: 'Roberto Garcia',
-    role: 'Owner Operator - 3 Years',
-    image: null,
+    role: 'Owner Operator',
+    stats: '3 Years | 280,000 Miles',
     rating: 5,
     quote: 'The mentorship program is incredible. They paired me with an experienced driver who helped me navigate the business side of trucking. I\'m now 80% equity in my truck.',
     location: 'Phoenix, AZ',
+    gradient: 'from-green-500 to-green-400',
   },
 ]
 
@@ -77,14 +80,18 @@ export function Testimonials() {
 
               {/* Author */}
               <div className="flex flex-col items-center">
-                <div className="w-16 h-16 bg-primary-500 rounded-full flex items-center justify-center mb-4">
+                <div className={`w-16 h-16 bg-gradient-to-br ${testimonial.gradient} rounded-full flex items-center justify-center mb-4 shadow-lg`}>
                   <span className="text-2xl font-bold">
                     {testimonial.name.split(' ').map(n => n[0]).join('')}
                   </span>
                 </div>
                 <div className="text-center">
-                  <p className="font-semibold text-lg">{testimonial.name}</p>
+                  <div className="flex items-center justify-center gap-2 mb-1">
+                    <p className="font-semibold text-lg">{testimonial.name}</p>
+                    <span className="bg-green-500/20 text-green-300 text-xs px-2 py-0.5 rounded-full">Verified</span>
+                  </div>
                   <p className="text-gray-300">{testimonial.role}</p>
+                  <p className="text-accent text-sm font-medium">{testimonial.stats}</p>
                   <p className="text-gray-400 text-sm">{testimonial.location}</p>
                 </div>
               </div>
@@ -99,13 +106,15 @@ export function Testimonials() {
               >
                 <ChevronLeft className="h-6 w-6" />
               </button>
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-3">
                 {testimonials.map((_, idx) => (
                   <button
                     key={idx}
                     onClick={() => setCurrentIndex(idx)}
-                    className={`w-2 h-2 rounded-full transition-colors ${
-                      idx === currentIndex ? 'bg-accent' : 'bg-primary-400'
+                    className={`rounded-full transition-all duration-300 ${
+                      idx === currentIndex
+                        ? 'bg-accent w-6 h-3'
+                        : 'bg-white/30 w-3 h-3 hover:bg-white/50'
                     }`}
                     aria-label={`Go to testimonial ${idx + 1}`}
                   />

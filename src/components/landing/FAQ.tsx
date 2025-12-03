@@ -32,7 +32,7 @@ const faqs = [
 ]
 
 export function FAQ() {
-  const [openIndex, setOpenIndex] = useState<number | null>(0)
+  const [openIndex, setOpenIndex] = useState<number | null>(null)
 
   return (
     <section className="py-20 bg-gray-50">
@@ -50,7 +50,10 @@ export function FAQ() {
           {faqs.map((faq, index) => (
             <div
               key={index}
-              className="bg-white rounded-lg shadow-md overflow-hidden"
+              className={cn(
+                'bg-white rounded-lg shadow-md overflow-hidden border-l-4 transition-colors',
+                openIndex === index ? 'border-accent' : 'border-transparent'
+              )}
             >
               <button
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
@@ -61,7 +64,7 @@ export function FAQ() {
                 </span>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-accent flex-shrink-0 transition-transform',
+                    'h-5 w-5 text-accent flex-shrink-0 transition-transform duration-300',
                     openIndex === index && 'transform rotate-180'
                   )}
                 />
@@ -72,7 +75,7 @@ export function FAQ() {
                   openIndex === index ? 'max-h-96' : 'max-h-0'
                 )}
               >
-                <p className="px-6 pb-4 text-gray-600">
+                <p className="px-6 pb-4 text-gray-600 leading-relaxed">
                   {faq.answer}
                 </p>
               </div>

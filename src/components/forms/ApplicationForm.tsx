@@ -4,7 +4,7 @@ import { useState, useRef } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
-import { CheckCircle, AlertCircle } from 'lucide-react'
+import { CheckCircle, AlertCircle, XCircle, Lightbulb } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { StepContact } from './steps/StepContact'
 import { StepQualification } from './steps/StepQualification'
@@ -27,6 +27,7 @@ export function ApplicationForm() {
   const router = useRouter()
   const [currentStep, setCurrentStep] = useState(1)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
   const [disqualified, setDisqualified] = useState<{ qualified: boolean; reasons: string[] } | null>(null)
   const contactIdRef = useRef<string | null>(null) // Track GHL contact ID for updates
 
@@ -137,6 +138,7 @@ export function ApplicationForm() {
 
   const onSubmit = async (data: ApplicationFormData) => {
     setIsSubmitting(true)
+    setSubmitError(null)
 
     try {
       const response = await fetch('/api/applicants', {
@@ -157,7 +159,7 @@ export function ApplicationForm() {
       router.push('/apply/success')
     } catch (error) {
       console.error('Error submitting application:', error)
-      alert('There was an error submitting your application. Please try again.')
+      setSubmitError('There was an error submitting your application. Please try again.')
     } finally {
       setIsSubmitting(false)
     }
@@ -165,34 +167,45 @@ export function ApplicationForm() {
 
   const CurrentStepComponent = STEPS[currentStep - 1].component
 
-  // Show disqualification message
+  // Show disqualification message with helpful guidance
   if (disqualified && !disqualified.qualified) {
     return (
       <div className="max-w-2xl mx-auto p-8">
-        <div className="bg-red-50 border border-red-200 rounded-lg p-8 text-center">
-          <AlertCircle className="h-16 w-16 text-red-500 mx-auto mb-4" />
-          <h2 className="text-2xl font-bold text-red-700 mb-4">
-            We&apos;re Unable to Pre-Approve Your Application
-          </h2>
-          <p className="text-gray-600 mb-6">
-            Based on your responses, you don&apos;t currently meet our program requirements:
-          </p>
-          <ul className="text-left max-w-md mx-auto mb-8 space-y-2">
-            {disqualified.reasons.map((reason, index) => (
-              <li key={index} className="flex items-start text-red-600">
-                <span className="mr-2">•</span>
-                {reason}
-              </li>
-            ))}
-          </ul>
-          <p className="text-gray-600 mb-6">
-            If your situation changes, we&apos;d love to hear from you again. In the meantime, feel free to contact us with any questions.
-          </p>
+        <div className="bg-amber-50 border border-amber-200 rounded-lg p-8">
+          <div className="text-center mb-6">
+            <Lightbulb className="h-16 w-16 text-amber-500 mx-auto mb-4" />
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">
+              Let&apos;s Get You Ready
+            </h2>
+            <p className="text-gray-600">
+              You&apos;re not quite there yet, but here&apos;s what you need:
+            </p>
+          </div>
+
+          <div className="bg-white rounded-lg p-6 mb-6">
+            <h3 className="font-semibold text-gray-900 mb-4">Requirements to meet:</h3>
+            <ul className="space-y-3">
+              {disqualified.reasons.map((reason, index) => (
+                <li key={index} className="flex items-start">
+                  <AlertCircle className="h-5 w-5 text-amber-500 mr-3 mt-0.5 flex-shrink-0" />
+                  <span className="text-gray-700">{reason}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="bg-primary-50 rounded-lg p-4 mb-6">
+            <p className="text-sm text-primary-800">
+              <strong>Need help?</strong> Many drivers get their CDL or medical card within weeks.
+              When your situation changes, come back and apply — we&apos;d love to help you own your truck!
+            </p>
+          </div>
+
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button variant="outline" onClick={handleBack}>
               Go Back & Edit
             </Button>
-            <Button variant="secondary" onClick={() => router.push('/')}>
+            <Button onClick={() => router.push('/')}>
               Return Home
             </Button>
           </div>
@@ -204,20 +217,51 @@ export function ApplicationForm() {
   return (
     <FormProvider {...methods}>
       <div className="max-w-2xl mx-auto">
+        {/* Error notification */}
+        {submitError && (
+          <div className="mb-6 bg-red-50 border border-red-200 rounded-lg p-4 flex items-start">
+            <XCircle className="h-5 w-5 text-red-500 mr-3 mt-0.5 flex-shrink-0" />
+            <div className="flex-1">
+              <p className="text-red-800 font-medium">Submission Error</p>
+              <p className="text-red-600 text-sm">{submitError}</p>
+            </div>
+            <button
+              type="button"
+              onClick={() => setSubmitError(null)}
+              className="text-red-400 hover:text-red-600"
+            >
+              <XCircle className="h-5 w-5" />
+            </button>
+          </div>
+        )}
+
         {/* Progress Steps */}
         <div className="mb-8">
-          <div className="flex items-center justify-between">
+          {/* Mobile step counter */}
+          <p className="text-center text-sm text-gray-500 mb-4 sm:hidden">
+            Step {currentStep} of {STEPS.length}: {STEPS[currentStep - 1].title}
+          </p>
+
+          <div
+            className="flex items-center justify-between"
+            role="progressbar"
+            aria-valuenow={currentStep}
+            aria-valuemin={1}
+            aria-valuemax={STEPS.length}
+            aria-label="Application progress"
+          >
             {STEPS.map((step, index) => (
               <div key={step.id} className="flex items-center">
                 <div className="flex flex-col items-center">
                   <div
-                    className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold text-sm ${
+                    className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold text-sm transition-colors ${
                       currentStep > step.id
                         ? 'bg-green-500 text-white'
                         : currentStep === step.id
                         ? 'bg-accent text-white'
                         : 'bg-gray-200 text-gray-500'
                     }`}
+                    aria-current={currentStep === step.id ? 'step' : undefined}
                   >
                     {currentStep > step.id ? (
                       <CheckCircle className="h-5 w-5" />
@@ -235,7 +279,7 @@ export function ApplicationForm() {
                 </div>
                 {index < STEPS.length - 1 && (
                   <div
-                    className={`w-full h-1 mx-2 ${
+                    className={`w-full h-1 mx-2 transition-colors ${
                       currentStep > step.id ? 'bg-green-500' : 'bg-gray-200'
                     }`}
                     style={{ minWidth: '40px' }}
@@ -248,13 +292,18 @@ export function ApplicationForm() {
 
         {/* Form */}
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="bg-white rounded-xl shadow-lg p-8">
+          <div className="bg-white rounded-xl shadow-lg p-6 sm:p-8">
             <CurrentStepComponent />
 
             {/* Navigation */}
             <div className="flex justify-between mt-8 pt-6 border-t">
               {currentStep > 1 ? (
-                <Button type="button" variant="outline" onClick={handleBack}>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={handleBack}
+                  disabled={isSubmitting}
+                >
                   Back
                 </Button>
               ) : (
@@ -262,12 +311,12 @@ export function ApplicationForm() {
               )}
 
               {currentStep < STEPS.length ? (
-                <Button type="button" onClick={handleNext}>
+                <Button type="button" onClick={handleNext} disabled={isSubmitting}>
                   Continue
                 </Button>
               ) : (
-                <Button type="submit" isLoading={isSubmitting}>
-                  Submit Application
+                <Button type="submit" isLoading={isSubmitting} disabled={isSubmitting}>
+                  {isSubmitting ? 'Submitting...' : 'Submit Application'}
                 </Button>
               )}
             </div>

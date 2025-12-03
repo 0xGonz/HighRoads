@@ -40,9 +40,9 @@ export function ValueProps() {
           {values.map((value) => (
             <div
               key={value.title}
-              className="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow"
+              className="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
             >
-              <div className="w-14 h-14 bg-accent/10 rounded-lg flex items-center justify-center mb-6">
+              <div className="w-14 h-14 bg-accent/20 rounded-lg flex items-center justify-center mb-6">
                 <value.icon className="h-7 w-7 text-accent" />
               </div>
               <h3 className="text-xl font-bold text-primary-700 mb-3">
