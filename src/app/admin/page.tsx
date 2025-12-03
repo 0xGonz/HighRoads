@@ -1,17 +1,36 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
-import { Users, Clock, CheckCircle, TrendingUp } from 'lucide-react'
+import { ExternalLink, Users, BarChart3, MessageSquare, Settings } from 'lucide-react'
+import { Button } from '@/components/ui/Button'
 
 export const metadata: Metadata = {
   title: 'Admin Dashboard | High Road Technologies',
-  description: 'Admin dashboard for managing applicants and tracking pipeline.',
+  description: 'Admin dashboard - Redirects to GoHighLevel CRM.',
 }
 
-const stats = [
-  { name: 'Total Applicants', value: '—', icon: Users, color: 'bg-blue-500' },
-  { name: 'New This Week', value: '—', icon: TrendingUp, color: 'bg-green-500' },
-  { name: 'Pending Review', value: '—', icon: Clock, color: 'bg-yellow-500' },
-  { name: 'Completed', value: '—', icon: CheckCircle, color: 'bg-purple-500' },
+const GHL_DASHBOARD_URL = 'https://app.gohighlevel.com'
+
+const ghlFeatures = [
+  {
+    title: 'Contact Management',
+    description: 'View, edit, and manage all applicant contacts',
+    icon: Users,
+  },
+  {
+    title: 'Pipeline Tracking',
+    description: 'Track applications through your sales pipeline',
+    icon: BarChart3,
+  },
+  {
+    title: 'Automated Messaging',
+    description: 'Email and SMS automation for follow-ups',
+    icon: MessageSquare,
+  },
+  {
+    title: 'Workflow Automation',
+    description: 'Automated sequences for abandoned forms and nurturing',
+    icon: Settings,
+  },
 ]
 
 export default function AdminDashboard() {
@@ -20,77 +39,80 @@ export default function AdminDashboard() {
       <div className="bg-primary-700 text-white py-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-2xl font-bold">Admin Dashboard</h1>
-          <p className="text-gray-200 mt-1">Manage applicants and track your pipeline</p>
+          <p className="text-gray-200 mt-1">Applicant management has moved to GoHighLevel</p>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          {stats.map((stat) => (
-            <div key={stat.name} className="bg-white rounded-lg shadow p-6">
-              <div className="flex items-center">
-                <div className={`${stat.color} p-3 rounded-lg`}>
-                  <stat.icon className="h-6 w-6 text-white" />
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Main CTA Card */}
+        <div className="bg-white rounded-xl shadow-lg p-8 text-center mb-8">
+          <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-6">
+            <ExternalLink className="h-8 w-8 text-accent" />
+          </div>
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">
+            Manage Applicants in GoHighLevel
+          </h2>
+          <p className="text-gray-600 mb-6 max-w-lg mx-auto">
+            All applicant data, pipeline management, and automated follow-ups are now handled
+            through GoHighLevel CRM for a more powerful and integrated experience.
+          </p>
+          <a
+            href={GHL_DASHBOARD_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Button size="lg" className="inline-flex items-center">
+              Open GoHighLevel Dashboard
+              <ExternalLink className="ml-2 h-5 w-5" />
+            </Button>
+          </a>
+        </div>
+
+        {/* Features Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          {ghlFeatures.map((feature) => (
+            <div key={feature.title} className="bg-white rounded-lg shadow p-6">
+              <div className="flex items-start">
+                <div className="bg-primary-100 p-3 rounded-lg">
+                  <feature.icon className="h-6 w-6 text-primary-700" />
                 </div>
                 <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-500">{stat.name}</p>
-                  <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
+                  <h3 className="font-semibold text-gray-900">{feature.title}</h3>
+                  <p className="text-sm text-gray-500 mt-1">{feature.description}</p>
                 </div>
               </div>
             </div>
           ))}
         </div>
 
-        {/* Quick Actions */}
-        <div className="bg-white rounded-lg shadow mb-8">
-          <div className="px-6 py-4 border-b">
-            <h2 className="text-lg font-semibold text-gray-900">Quick Actions</h2>
-          </div>
-          <div className="p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            <Link
-              href="/admin/applicants"
-              className="flex items-center p-4 border rounded-lg hover:bg-gray-50 transition-colors"
-            >
-              <Users className="h-8 w-8 text-primary-700 mr-4" />
-              <div>
-                <p className="font-medium text-gray-900">View All Applicants</p>
-                <p className="text-sm text-gray-500">Manage and review applications</p>
-              </div>
-            </Link>
-            <Link
-              href="/admin/applicants?status=new"
-              className="flex items-center p-4 border rounded-lg hover:bg-gray-50 transition-colors"
-            >
-              <Clock className="h-8 w-8 text-yellow-500 mr-4" />
-              <div>
-                <p className="font-medium text-gray-900">New Applications</p>
-                <p className="text-sm text-gray-500">Review pending submissions</p>
-              </div>
-            </Link>
-            <Link
-              href="/admin/applicants?status=complete"
-              className="flex items-center p-4 border rounded-lg hover:bg-gray-50 transition-colors"
-            >
-              <CheckCircle className="h-8 w-8 text-green-500 mr-4" />
-              <div>
-                <p className="font-medium text-gray-900">Completed</p>
-                <p className="text-sm text-gray-500">View completed applications</p>
-              </div>
-            </Link>
-          </div>
+        {/* Setup Instructions */}
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
+          <h3 className="font-semibold text-blue-800 mb-3">GHL Setup Checklist</h3>
+          <ul className="space-y-2 text-blue-700 text-sm">
+            <li className="flex items-start">
+              <span className="mr-2">1.</span>
+              Create custom fields for application data (CDL, medical card, experience, etc.)
+            </li>
+            <li className="flex items-start">
+              <span className="mr-2">2.</span>
+              Set up pipeline stages: New → In Progress → Carrier App → Pending → Complete
+            </li>
+            <li className="flex items-start">
+              <span className="mr-2">3.</span>
+              Create workflows for new applications and abandoned form follow-ups
+            </li>
+            <li className="flex items-start">
+              <span className="mr-2">4.</span>
+              Configure email/SMS templates for confirmations and reminders
+            </li>
+          </ul>
         </div>
 
-        {/* Info Box */}
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
-          <h3 className="font-semibold text-blue-800 mb-2">Setup Required</h3>
-          <p className="text-blue-700 text-sm mb-4">
-            To see live data, make sure you&apos;ve configured your Supabase connection in the <code className="bg-blue-100 px-1 rounded">.env.local</code> file
-            and run the database schema SQL in your Supabase project.
-          </p>
-          <p className="text-blue-700 text-sm">
-            The stats above will update automatically once the database is connected.
-          </p>
+        {/* Back Link */}
+        <div className="text-center mt-8">
+          <Link href="/" className="text-primary-700 hover:underline">
+            ← Back to Website
+          </Link>
         </div>
       </div>
     </div>

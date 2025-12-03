@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
@@ -28,6 +28,7 @@ export function ApplicationForm() {
   const [currentStep, setCurrentStep] = useState(1)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [disqualified, setDisqualified] = useState<{ qualified: boolean; reasons: string[] } | null>(null)
+  const contactIdRef = useRef<string | null>(null) // Track GHL contact ID for updates
 
   const methods = useForm<ApplicationFormData>({
     resolver: zodResolver(applicationSchema),
@@ -52,6 +53,40 @@ export function ApplicationForm() {
 
   const { handleSubmit, trigger, getValues } = methods
 
+  // Track partial submissions to GHL for abandoned form recovery
+  const trackPartialSubmission = async (step: number) => {
+    const values = getValues()
+
+    // Only track if we have contact info
+    if (!values.first_name || !values.email || !values.phone) return
+
+    try {
+      const response = await fetch('/api/applicants', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          partial: true,
+          step,
+          first_name: values.first_name,
+          last_name: values.last_name,
+          email: values.email,
+          phone: values.phone,
+          contactId: contactIdRef.current,
+        }),
+      })
+
+      if (response.ok) {
+        const data = await response.json()
+        if (data.contact_id) {
+          contactIdRef.current = data.contact_id
+        }
+      }
+    } catch (error) {
+      // Silently fail - don't interrupt user experience for tracking
+      console.error('Error tracking partial submission:', error)
+    }
+  }
+
   const handleNext = async () => {
     let fieldsToValidate: (keyof ApplicationFormData)[] = []
 
@@ -70,6 +105,10 @@ export function ApplicationForm() {
     const isValid = await trigger(fieldsToValidate)
 
     if (isValid) {
+      // Track partial submission after completing each step (for abandoned form recovery)
+      // This runs in the background - doesn't block the user
+      trackPartialSubmission(currentStep)
+
       // Check pre-qualification after step 2
       if (currentStep === 2) {
         const values = getValues()
@@ -105,7 +144,10 @@ export function ApplicationForm() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          ...data,
+          contactId: contactIdRef.current, // Pass existing contact ID to update rather than create
+        }),
       })
 
       if (!response.ok) {
