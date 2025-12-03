@@ -34,10 +34,12 @@ const RadioGroup = forwardRef<HTMLInputElement, RadioGroupProps>(
             <label
               key={option.value}
               className={cn(
-                'relative flex items-start cursor-pointer p-4 border rounded-lg transition-colors',
+                'relative flex items-start cursor-pointer p-4 border-2 rounded-xl',
+                'transition-all duration-200 ease-out',
+                'hover:scale-[1.01]',
                 value === option.value
-                  ? 'border-accent bg-accent/5'
-                  : 'border-gray-300 hover:border-gray-400',
+                  ? 'border-accent bg-accent/5 shadow-md shadow-accent/10'
+                  : 'border-gray-200 hover:border-accent/30 hover:bg-gray-50/50',
                 orientation === 'horizontal' && 'flex-1 min-w-[150px]'
               )}
             >
@@ -51,19 +53,34 @@ const RadioGroup = forwardRef<HTMLInputElement, RadioGroupProps>(
                 className="sr-only"
                 {...props}
               />
+              {/* Custom radio button */}
               <div
                 className={cn(
-                  'h-5 w-5 rounded-full border-2 flex items-center justify-center flex-shrink-0',
-                  value === option.value ? 'border-accent' : 'border-gray-300'
+                  'relative h-5 w-5 rounded-full border-2 flex items-center justify-center flex-shrink-0',
+                  'transition-all duration-200',
+                  value === option.value
+                    ? 'border-accent bg-white'
+                    : 'border-gray-300 group-hover:border-accent/50'
                 )}
               >
+                {/* Inner dot with scale animation */}
+                <div
+                  className={cn(
+                    'h-2.5 w-2.5 rounded-full bg-accent',
+                    'transition-all duration-200 ease-out',
+                    value === option.value
+                      ? 'scale-100 opacity-100'
+                      : 'scale-0 opacity-0'
+                  )}
+                />
+                {/* Pulse effect when selected */}
                 {value === option.value && (
-                  <div className="h-2.5 w-2.5 rounded-full bg-accent" />
+                  <span className="absolute inset-0 rounded-full bg-accent/20 animate-ping" style={{ animationDuration: '1s', animationIterationCount: '1' }} />
                 )}
               </div>
               <div className="ml-3">
                 <span className={cn(
-                  'text-sm font-medium',
+                  'text-sm font-medium transition-colors duration-200',
                   value === option.value ? 'text-accent' : 'text-gray-700'
                 )}>
                   {option.label}
@@ -74,11 +91,30 @@ const RadioGroup = forwardRef<HTMLInputElement, RadioGroupProps>(
                   </p>
                 )}
               </div>
+              {/* Selected indicator */}
+              {value === option.value && (
+                <div className="absolute top-3 right-3">
+                  <svg
+                    className="w-5 h-5 text-accent animate-scale-bounce"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </div>
+              )}
             </label>
           ))}
         </div>
         {error && (
-          <p className="mt-1 text-sm text-red-500">{error}</p>
+          <p className="mt-1.5 text-sm text-red-500 flex items-center animate-fade-in">
+            <span className="inline-block w-1 h-1 rounded-full bg-red-500 mr-2" />
+            {error}
+          </p>
         )}
       </div>
     )

@@ -64,18 +64,23 @@ export function FAQ() {
                 </span>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-accent flex-shrink-0 transition-transform duration-300',
-                    openIndex === index && 'transform rotate-180'
+                    'h-5 w-5 text-accent flex-shrink-0 transition-transform duration-200',
+                    openIndex === index && 'rotate-180'
                   )}
                 />
               </button>
               <div
                 className={cn(
-                  'overflow-hidden transition-all duration-300',
+                  'overflow-hidden transition-all duration-300 ease-in-out',
                   openIndex === index ? 'max-h-96' : 'max-h-0'
                 )}
               >
-                <p className="px-6 pb-4 text-gray-600 leading-relaxed">
+                <p
+                  className={cn(
+                    'px-6 pb-4 text-gray-600 leading-relaxed transition-opacity duration-200',
+                    openIndex === index ? 'opacity-100 delay-100' : 'opacity-0'
+                  )}
+                >
                   {faq.answer}
                 </p>
               </div>

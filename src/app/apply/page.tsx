@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function ApplyPage() {
   return (
-    <div className="min-h-screen bg-gray-100 py-12 px-4">
+    <div className="min-h-screen bg-gray-100 py-16 px-4">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-8">
           <h1 className="text-3xl md:text-4xl font-bold text-primary-700 mb-4">

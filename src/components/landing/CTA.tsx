@@ -1,11 +1,12 @@
 import Link from 'next/link'
 import { ArrowRight, Clock, Shield } from 'lucide-react'
+import { Button } from '@/components/ui/Button'
 
 export function CTA() {
   return (
     <section className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-gradient-to-r from-primary-700 to-primary-600 rounded-2xl p-8 md:p-16 text-center text-white">
+        <div className="bg-gradient-to-r from-primary-700 to-primary-600 rounded-2xl p-8 md:p-12 text-center text-white">
           {/* Trust badges */}
           <div className="flex items-center justify-center gap-6 mb-6 text-gray-200">
             <span className="flex items-center text-sm">
@@ -26,18 +27,16 @@ export function CTA() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/apply"
-              className="inline-flex items-center justify-center bg-accent hover:bg-accent-600 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all hover:scale-105"
-            >
-              Apply in 5 Minutes
-              <ArrowRight className="ml-2 h-5 w-5" />
+            <Link href="/apply">
+              <Button size="lg" className="text-lg group">
+                Apply in 5 Minutes
+                <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+              </Button>
             </Link>
-            <Link
-              href="/how-it-works"
-              className="inline-flex items-center justify-center border-2 border-white hover:bg-white hover:text-primary-700 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-colors"
-            >
-              Learn How It Works
+            <Link href="/how-it-works">
+              <Button variant="outline" size="lg" className="text-lg border-white text-white hover:bg-white hover:text-primary-700">
+                Learn How It Works
+              </Button>
             </Link>
           </div>
 

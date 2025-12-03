@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { ChevronLeft, ChevronRight, Star, Quote } from 'lucide-react'
 
 const testimonials = [
@@ -38,13 +38,40 @@ const testimonials = [
 
 export function Testimonials() {
   const [currentIndex, setCurrentIndex] = useState(0)
+  const [isTransitioning, setIsTransitioning] = useState(false)
+
+  // Handle transition timing
+  useEffect(() => {
+    if (isTransitioning) {
+      const timer = setTimeout(() => {
+        setIsTransitioning(false)
+      }, 300)
+      return () => clearTimeout(timer)
+    }
+  }, [isTransitioning])
 
   const next = () => {
-    setCurrentIndex((current) => (current + 1) % testimonials.length)
+    if (isTransitioning) return
+    setIsTransitioning(true)
+    setTimeout(() => {
+      setCurrentIndex((current) => (current + 1) % testimonials.length)
+    }, 150)
   }
 
   const prev = () => {
-    setCurrentIndex((current) => (current - 1 + testimonials.length) % testimonials.length)
+    if (isTransitioning) return
+    setIsTransitioning(true)
+    setTimeout(() => {
+      setCurrentIndex((current) => (current - 1 + testimonials.length) % testimonials.length)
+    }, 150)
+  }
+
+  const jumpTo = (index: number) => {
+    if (isTransitioning || index === currentIndex) return
+    setIsTransitioning(true)
+    setTimeout(() => {
+      setCurrentIndex(index)
+    }, 150)
   }
 
   const testimonial = testimonials[currentIndex]
@@ -65,7 +92,12 @@ export function Testimonials() {
           <div className="relative bg-primary-600 rounded-2xl p-8 md:p-12">
             <Quote className="absolute top-6 left-6 h-12 w-12 text-accent opacity-50" />
 
-            <div className="relative z-10">
+            {/* Crossfade content wrapper */}
+            <div
+              className={`relative z-10 transition-opacity duration-300 ease-in-out ${
+                isTransitioning ? 'opacity-0' : 'opacity-100'
+              }`}
+            >
               {/* Stars */}
               <div className="flex justify-center mb-6">
                 {[...Array(testimonial.rating)].map((_, i) => (
@@ -101,7 +133,8 @@ export function Testimonials() {
             <div className="flex justify-center mt-8 space-x-4">
               <button
                 onClick={prev}
-                className="p-2 bg-primary-500 hover:bg-primary-400 rounded-full transition-colors"
+                disabled={isTransitioning}
+                className="p-2 bg-primary-500 hover:bg-primary-400 rounded-full transition-colors disabled:opacity-50"
                 aria-label="Previous testimonial"
               >
                 <ChevronLeft className="h-6 w-6" />
@@ -110,8 +143,9 @@ export function Testimonials() {
                 {testimonials.map((_, idx) => (
                   <button
                     key={idx}
-                    onClick={() => setCurrentIndex(idx)}
-                    className={`rounded-full transition-all duration-300 ${
+                    onClick={() => jumpTo(idx)}
+                    disabled={isTransitioning}
+                    className={`rounded-full transition-all duration-200 ${
                       idx === currentIndex
                         ? 'bg-accent w-6 h-3'
                         : 'bg-white/30 w-3 h-3 hover:bg-white/50'
@@ -122,7 +156,8 @@ export function Testimonials() {
               </div>
               <button
                 onClick={next}
-                className="p-2 bg-primary-500 hover:bg-primary-400 rounded-full transition-colors"
+                disabled={isTransitioning}
+                className="p-2 bg-primary-500 hover:bg-primary-400 rounded-full transition-colors disabled:opacity-50"
                 aria-label="Next testimonial"
               >
                 <ChevronRight className="h-6 w-6" />

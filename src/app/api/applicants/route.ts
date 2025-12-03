@@ -5,6 +5,14 @@ import { applicationSchema, checkPrequalification } from '@/lib/validations'
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'
 
+// Error codes for frontend to handle
+const ErrorCodes = {
+  SERVICE_NOT_CONFIGURED: 'SERVICE_NOT_CONFIGURED',
+  EXTERNAL_SERVICE_ERROR: 'EXTERNAL_SERVICE_ERROR',
+  VALIDATION_ERROR: 'VALIDATION_ERROR',
+  INTERNAL_ERROR: 'INTERNAL_ERROR',
+} as const
+
 /**
  * POST /api/applicants
  * Submit a complete or partial application to GoHighLevel
@@ -22,7 +30,12 @@ export async function POST(request: NextRequest) {
     const validationResult = applicationSchema.safeParse(body)
     if (!validationResult.success) {
       return NextResponse.json(
-        { error: 'Validation failed', details: validationResult.error.errors },
+        {
+          success: false,
+          error: ErrorCodes.VALIDATION_ERROR,
+          message: 'Please check your information and try again.',
+          details: validationResult.error.errors,
+        },
         { status: 400 }
       )
     }
@@ -38,18 +51,16 @@ export async function POST(request: NextRequest) {
       us_work_eligible: data.us_work_eligible,
     })
 
-    // Check if GHL is configured
+    // Check if GHL is configured - CRITICAL: Do not allow submission without backend
     if (!isGHLConfigured()) {
-      console.warn('GHL not configured - application will not be saved to CRM')
-      // Still return success for testing purposes
+      console.error('CRITICAL: GHL not configured - rejecting application submission')
       return NextResponse.json(
         {
-          success: true,
-          message: 'Application received (GHL not configured)',
-          is_prequalified: prequalResult.qualified,
-          warning: 'GoHighLevel is not configured. Application was not saved to CRM.',
+          success: false,
+          error: ErrorCodes.SERVICE_NOT_CONFIGURED,
+          message: 'We are experiencing technical difficulties. Please try again later or contact us directly.',
         },
-        { status: 201 }
+        { status: 503 }
       )
     }
 
@@ -83,8 +94,28 @@ export async function POST(request: NextRequest) {
     )
   } catch (error) {
     console.error('Error processing application:', error)
+
+    // Check if this is a GHL API error
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error'
+    const isGHLError = errorMessage.includes('GHL') || errorMessage.includes('GoHighLevel')
+
+    if (isGHLError) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: ErrorCodes.EXTERNAL_SERVICE_ERROR,
+          message: 'Unable to process your application right now. Please try again in a few minutes.',
+        },
+        { status: 502 }
+      )
+    }
+
     return NextResponse.json(
-      { error: 'Internal server error', message: error instanceof Error ? error.message : 'Unknown error' },
+      {
+        success: false,
+        error: ErrorCodes.INTERNAL_ERROR,
+        message: 'Something went wrong. Please try again.',
+      },
       { status: 500 }
     )
   }
@@ -92,6 +123,8 @@ export async function POST(request: NextRequest) {
 
 /**
  * Handle partial form submissions for abandoned form tracking
+ * Note: Partial tracking failures should NOT block user experience
+ * but we should clearly indicate when tracking is unavailable
  */
 async function handlePartialSubmission(body: {
   step: number
@@ -102,11 +135,13 @@ async function handlePartialSubmission(body: {
   contactId?: string
 }) {
   try {
+    // Partial tracking is optional - don't block user if not configured
     if (!isGHLConfigured()) {
       return NextResponse.json(
         {
-          success: true,
-          message: 'Partial submission received (GHL not configured)',
+          success: false,
+          tracked: false,
+          warning: 'Tracking unavailable - CRM not configured',
           step: body.step,
         },
         { status: 200 }
@@ -126,7 +161,7 @@ async function handlePartialSubmission(body: {
     return NextResponse.json(
       {
         success: true,
-        message: 'Partial submission tracked',
+        tracked: true,
         contact_id: contactId,
         step: body.step,
       },
@@ -135,10 +170,12 @@ async function handlePartialSubmission(body: {
   } catch (error) {
     console.error('Error tracking partial submission:', error)
     // Don't fail the user experience for partial tracking errors
+    // but indicate that tracking failed
     return NextResponse.json(
       {
-        success: true,
-        message: 'Partial submission received (tracking error)',
+        success: false,
+        tracked: false,
+        warning: 'Tracking failed - will retry on final submission',
         step: body.step,
       },
       { status: 200 }

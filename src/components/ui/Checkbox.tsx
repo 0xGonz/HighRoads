@@ -12,27 +12,40 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
     const checkboxId = id || label.toLowerCase().replace(/\s+/g, '-')
 
     return (
-      <div className="flex items-start">
+      <div className="flex items-start group">
         <div className="relative flex items-center">
           <input
             ref={ref}
             id={checkboxId}
             type="checkbox"
             className={cn(
-              'peer h-5 w-5 cursor-pointer appearance-none rounded border-2 transition-colors',
-              'focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2',
-              'checked:bg-accent checked:border-accent',
-              error ? 'border-red-500' : 'border-gray-300 hover:border-gray-400',
+              'peer h-6 w-6 cursor-pointer appearance-none rounded-md border-2',
+              'transition-all duration-200 ease-out',
+              'focus:outline-none focus:ring-2 focus:ring-accent/30 focus:ring-offset-2',
+              'checked:bg-accent checked:border-accent checked:shadow-md checked:shadow-accent/20',
+              'hover:scale-105 active:scale-95',
+              error ? 'border-red-500' : 'border-gray-300 hover:border-accent/50',
               className
             )}
             {...props}
           />
-          <Check className="absolute h-3.5 w-3.5 text-white pointer-events-none opacity-0 peer-checked:opacity-100 left-[3px]" />
+          {/* Animated checkmark */}
+          <Check
+            className={cn(
+              'absolute h-4 w-4 text-white pointer-events-none left-1',
+              'opacity-0 scale-0 peer-checked:opacity-100 peer-checked:scale-100',
+              'transition-all duration-200 ease-out'
+            )}
+            strokeWidth={3}
+          />
+          {/* Ripple effect on check */}
+          <span className="absolute inset-0 rounded-md bg-accent/20 scale-0 peer-checked:scale-150 opacity-0 peer-checked:opacity-0 transition-all duration-300 pointer-events-none" />
         </div>
         <label
           htmlFor={checkboxId}
           className={cn(
-            'ml-3 cursor-pointer text-sm',
+            'ml-3 cursor-pointer text-sm transition-colors duration-200',
+            'group-hover:text-gray-900',
             error ? 'text-red-500' : 'text-gray-700'
           )}
         >

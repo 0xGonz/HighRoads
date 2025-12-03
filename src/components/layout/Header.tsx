@@ -62,7 +62,10 @@ export function Header() {
               className="text-white p-2 hover:bg-primary-600 rounded-lg transition-colors"
               aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
             >
-              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              <span className="relative w-6 h-6 block">
+                <Menu className={`h-6 w-6 absolute inset-0 transition-all duration-200 ${isMenuOpen ? 'opacity-0 rotate-90' : 'opacity-100 rotate-0'}`} />
+                <X className={`h-6 w-6 absolute inset-0 transition-all duration-200 ${isMenuOpen ? 'opacity-100 rotate-0' : 'opacity-0 -rotate-90'}`} />
+              </span>
             </button>
           </div>
         </div>
@@ -70,24 +73,36 @@ export function Header() {
         {/* Mobile Navigation */}
         <div
           className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
-            isMenuOpen ? 'max-h-64 pb-4' : 'max-h-0'
+            isMenuOpen ? 'max-h-80 pb-4 opacity-100' : 'max-h-0 opacity-0'
           }`}
         >
-          {navigation.map((item) => (
+          {navigation.map((item, index) => (
             <Link
               key={item.name}
               href={item.href}
-              className={`block py-2 transition-colors ${
+              className={`block py-2 transition-all duration-200 ${
                 isActive(item.href)
                   ? 'text-white font-semibold'
-                  : 'text-gray-200 hover:text-white'
+                  : 'text-gray-200 hover:text-white hover:translate-x-1'
               }`}
+              style={{
+                transitionDelay: isMenuOpen ? `${index * 50}ms` : '0ms',
+                opacity: isMenuOpen ? 1 : 0,
+                transform: isMenuOpen ? 'translateX(0)' : 'translateX(-8px)',
+              }}
               onClick={() => setIsMenuOpen(false)}
             >
               {item.name}
             </Link>
           ))}
-          <div className="mt-4">
+          <div
+            className="mt-4 transition-all duration-200"
+            style={{
+              transitionDelay: isMenuOpen ? `${navigation.length * 50}ms` : '0ms',
+              opacity: isMenuOpen ? 1 : 0,
+              transform: isMenuOpen ? 'translateX(0)' : 'translateX(-8px)',
+            }}
+          >
             <Link href="/apply" onClick={() => setIsMenuOpen(false)}>
               <Button className="w-full">Apply Now</Button>
             </Link>
