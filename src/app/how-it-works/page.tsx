@@ -14,7 +14,7 @@ import { Button } from '@/components/ui/Button'
 import { PageHero } from '@/components/layout/PageHero'
 
 export const metadata: Metadata = {
-  title: 'How It Works | High Road Technologies',
+  title: 'How It Works | High Road Partners LLC',
   description: 'Learn how our lease-to-own trucking program works. From application to ownership, we guide you every step of the way.',
 }
 

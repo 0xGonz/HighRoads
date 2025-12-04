@@ -10,7 +10,7 @@ export function Footer() {
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center space-x-2.5 mb-5">
               <Truck className="h-8 w-8 text-accent" />
-              <span className="text-xl font-bold">High Road Technologies</span>
+              <span className="text-xl font-bold">High Road Partners LLC</span>
             </div>
             <p className="text-gray-300 max-w-md mb-6 leading-relaxed">
               Empowering drivers to own their future. Lease-to-own trucking with
@@ -113,7 +113,7 @@ export function Footer() {
         </div>
 
         <div className="border-t border-primary-800 mt-12 pt-8 text-center text-gray-500">
-          <p className="text-sm">&copy; {new Date().getFullYear()} High Road Technologies Partners LLC. All rights reserved.</p>
+          <p className="text-sm">&copy; {new Date().getFullYear()} High Road Partners LLC. All rights reserved.</p>
         </div>
       </div>
     </footer>

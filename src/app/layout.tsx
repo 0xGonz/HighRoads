@@ -22,7 +22,7 @@ const interTight = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'High Road Technologies | Lease-to-Own Trucking',
+  title: 'High Road Partners LLC | Lease-to-Own Trucking',
   description: 'Own your own truck with flexible weekly payments. Drive for top-paying carriers with full support, training, and mentorship. No credit check required.',
   keywords: 'lease to own truck, trucking, CDL, owner operator, trucking business',
 }

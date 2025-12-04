@@ -5,7 +5,7 @@ import { ExternalLink } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 
 export const metadata: Metadata = {
-  title: 'Applicants | High Road Technologies',
+  title: 'Applicants | High Road Partners LLC',
   description: 'Applicant management has moved to GoHighLevel CRM.',
 }
 

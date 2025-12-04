@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 import { ApplicationForm } from '@/components/forms/ApplicationForm'
 
 export const metadata: Metadata = {
-  title: 'Apply Now | High Road Technologies',
+  title: 'Apply Now | High Road Partners LLC',
   description: 'Start your journey to truck ownership. Complete our simple application to get pre-approved for our lease-to-own program.',
 }
 

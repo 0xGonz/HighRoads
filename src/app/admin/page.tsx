@@ -4,7 +4,7 @@ import { ExternalLink, Users, BarChart3, MessageSquare, Settings } from 'lucide-
 import { Button } from '@/components/ui/Button'
 
 export const metadata: Metadata = {
-  title: 'Admin Dashboard | High Road Technologies',
+  title: 'Admin Dashboard | High Road Partners LLC',
   description: 'Admin dashboard - Redirects to GoHighLevel CRM.',
 }
 

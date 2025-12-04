@@ -1,4 +1,4 @@
-# High Road Technologies - Lease-to-Own Trucking Platform
+# High Road Partners LLC - Lease-to-Own Trucking Platform
 
 Phase 1 MVP: Digital intake system for driver applications with GoHighLevel CRM integration.
 
