@@ -77,20 +77,20 @@ export function Testimonials() {
   const testimonial = testimonials[currentIndex]
 
   return (
-    <section className="py-20 bg-primary-700 text-white">
+    <section className="py-24 lg:py-28 bg-primary-700 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+        <div className="text-center mb-20">
+          <h2 className="font-display tracking-heading text-3xl md:text-4xl font-bold mb-5">
             Driver Success Stories
           </h2>
-          <p className="text-xl text-gray-200 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-200 max-w-2xl mx-auto leading-relaxed">
             Hear from real drivers who have transformed their careers through the High Road program.
           </p>
         </div>
 
         <div className="max-w-4xl mx-auto">
-          <div className="relative bg-primary-600 rounded-2xl p-8 md:p-12">
-            <Quote className="absolute top-6 left-6 h-12 w-12 text-accent opacity-50" />
+          <div className="relative bg-gradient-to-br from-primary-600 to-primary-700 rounded-2xl p-8 md:p-14 shadow-soft-xl border border-white/5">
+            <Quote className="absolute top-8 left-8 h-12 w-12 text-accent opacity-40" />
 
             {/* Crossfade content wrapper */}
             <div
@@ -112,10 +112,13 @@ export function Testimonials() {
 
               {/* Author */}
               <div className="flex flex-col items-center">
-                <div className={`w-16 h-16 bg-gradient-to-br ${testimonial.gradient} rounded-full flex items-center justify-center mb-4 shadow-lg`}>
-                  <span className="text-2xl font-bold">
-                    {testimonial.name.split(' ').map(n => n[0]).join('')}
-                  </span>
+                <div className="relative mb-4">
+                  <div className={`w-16 h-16 bg-gradient-to-br ${testimonial.gradient} rounded-full flex items-center justify-center shadow-soft-lg`}>
+                    <span className="text-2xl font-bold">
+                      {testimonial.name.split(' ').map(n => n[0]).join('')}
+                    </span>
+                  </div>
+                  <div className="absolute inset-0 rounded-full ring-2 ring-white/20 ring-offset-2 ring-offset-primary-600" />
                 </div>
                 <div className="text-center">
                   <div className="flex items-center justify-center gap-2 mb-1">

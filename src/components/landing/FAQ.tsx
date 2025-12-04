@@ -35,13 +35,13 @@ export function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
 
   return (
-    <section className="py-20 bg-gray-50">
+    <section className="py-24 lg:py-28 bg-gray-50">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-primary-700 mb-4">
+        <div className="text-center mb-20">
+          <h2 className="font-display tracking-heading text-3xl md:text-4xl font-bold text-primary-700 mb-5">
             Frequently Asked Questions
           </h2>
-          <p className="text-xl text-gray-600">
+          <p className="text-xl text-gray-600 leading-relaxed">
             Got questions? We&apos;ve got answers. If you don&apos;t see your question here, reach out to us.
           </p>
         </div>
@@ -51,13 +51,13 @@ export function FAQ() {
             <div
               key={index}
               className={cn(
-                'bg-white rounded-lg shadow-md overflow-hidden border-l-4 transition-colors',
-                openIndex === index ? 'border-accent' : 'border-transparent'
+                'bg-white rounded-xl shadow-soft overflow-hidden border-l-4 transition-all duration-300 ease-smooth',
+                openIndex === index ? 'border-accent shadow-soft-lg' : 'border-transparent'
               )}
             >
               <button
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
+                className="w-full px-6 py-5 text-left flex items-center justify-between hover:bg-gray-50/50 transition-colors duration-200"
               >
                 <span className="font-semibold text-primary-700 pr-4">
                   {faq.question}

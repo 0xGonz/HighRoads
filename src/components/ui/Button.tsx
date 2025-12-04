@@ -13,31 +13,31 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       // Base layout and typography
       'inline-flex items-center justify-center font-semibold rounded-lg',
       // Smooth transitions for all effects
-      'transition-all duration-200 ease-out',
+      'transition-all duration-250 ease-smooth',
       // Focus states
       'focus:outline-none focus:ring-2 focus:ring-offset-2',
-      // Hover lift effect (scale up slightly with shadow)
-      'hover:scale-[1.02] hover:shadow-lg',
+      // Hover lift effect (subtle scale with shadow)
+      'hover:scale-[1.015]',
       // Active press effect (scale down + press into page feel)
-      'active:scale-[0.98] active:translate-y-[1px] active:shadow-sm',
+      'active:scale-[0.98] active:translate-y-[1px]',
       // Disabled states
       'disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-none'
     )
 
     const variants = {
       primary: cn(
-        'bg-accent text-white focus:ring-accent',
-        'hover:bg-accent-600 hover:shadow-accent/25',
-        'active:bg-accent-700'
+        'bg-gradient-to-b from-accent to-accent-600 text-white shadow-soft focus:ring-accent',
+        'hover:from-accent-500 hover:to-accent-600 hover:shadow-glow-accent',
+        'active:from-accent-600 active:to-accent-700 active:shadow-soft'
       ),
       secondary: cn(
-        'bg-primary-700 text-white focus:ring-primary',
-        'hover:bg-primary-600 hover:shadow-primary/25',
-        'active:bg-primary-800'
+        'bg-gradient-to-b from-primary-600 to-primary-700 text-white shadow-soft focus:ring-primary',
+        'hover:from-primary-500 hover:to-primary-600 hover:shadow-soft-lg',
+        'active:from-primary-700 active:to-primary-800 active:shadow-soft'
       ),
       outline: cn(
         'border-2 border-primary-700 text-primary-700 bg-transparent focus:ring-primary',
-        'hover:bg-primary-700 hover:text-white hover:shadow-primary/20',
+        'hover:bg-primary-700 hover:text-white hover:shadow-soft',
         'active:bg-primary-800'
       ),
       ghost: cn(

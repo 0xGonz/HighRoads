@@ -17,6 +17,48 @@
 @layer base {
   body {
     @apply bg-white text-gray-900;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Premium typography for headings */
+  h1, h2, h3 {
+    text-rendering: optimizeLegibility;
+  }
+}
+
+/* Typography utility classes */
+@layer utilities {
+  .tracking-display {
+    letter-spacing: -0.025em;
+  }
+
+  .tracking-heading {
+    letter-spacing: -0.015em;
+  }
+
+  /* Tabular numbers for forms */
+  .tabular-nums {
+    font-feature-settings: "tnum";
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Stagger animation delays */
+  .animate-delay-100 {
+    animation-delay: 100ms;
+  }
+  .animate-delay-200 {
+    animation-delay: 200ms;
+  }
+  .animate-delay-300 {
+    animation-delay: 300ms;
+  }
+  .animate-delay-400 {
+    animation-delay: 400ms;
+  }
+  .animate-delay-500 {
+    animation-delay: 500ms;
   }
 }
 

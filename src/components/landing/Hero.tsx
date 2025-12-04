@@ -12,8 +12,8 @@ const benefits = [
 export function Hero() {
   return (
     <section className="relative bg-primary-700 text-white overflow-hidden">
-      {/* Background pattern - static, no drift animation */}
-      <div className="absolute inset-0 opacity-20">
+      {/* Background pattern - subtle texture */}
+      <div className="absolute inset-0 opacity-10">
         <div
           className="absolute inset-0"
           style={{
@@ -25,24 +25,26 @@ export function Hero() {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
         <div className="max-w-3xl">
           {/* Trust Badge */}
-          <div className="inline-flex items-center bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 mb-6 animate-fade-in">
-            <Users className="h-4 w-4 text-accent mr-2" />
-            <span className="text-sm font-medium">Trusted by 500+ Owner-Operators Nationwide</span>
+          <div className="inline-flex items-center bg-white/15 backdrop-blur-sm rounded-full px-5 py-2.5 mb-8 border border-white/10">
+            <Users className="h-4 w-4 text-accent mr-2.5" />
+            <span className="text-sm font-semibold tracking-wide">Trusted by 500+ Owner-Operators Nationwide</span>
           </div>
 
-          {/* Main heading - the key animation */}
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 animate-fade-in-up">
+          {/* Main heading */}
+          <h1 className="font-display tracking-display text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] mb-6">
             Own Your Own Truck.
-            <span className="text-accent block">Start for $0 Down.</span>
+            <span className="text-accent block mt-1" style={{ textShadow: '0 0 40px rgba(249, 115, 22, 0.3)' }}>
+              Start for $0 Down.
+            </span>
           </h1>
 
           {/* Subtitle */}
-          <p className="text-xl md:text-2xl text-gray-200 mb-8">
+          <p className="text-xl md:text-2xl text-gray-200 mb-10 leading-relaxed">
             Join the High Road program and build equity in your own truck while driving for top-paying carriers.
           </p>
 
-          {/* Benefits list - all appear together, no individual stagger */}
-          <ul className="space-y-3 mb-10">
+          {/* Benefits list */}
+          <ul className="space-y-3.5 mb-12">
             {benefits.map((benefit) => (
               <li key={benefit} className="flex items-center space-x-3">
                 <CheckCircle className="h-6 w-6 text-accent flex-shrink-0" />
@@ -56,7 +58,7 @@ export function Hero() {
             <Link href="/apply">
               <Button size="lg" className="w-full sm:w-auto text-lg px-8 group">
                 Apply in 5 Minutes
-                <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 ease-smooth group-hover:translate-x-1" />
               </Button>
             </Link>
             <Link href="/how-it-works">

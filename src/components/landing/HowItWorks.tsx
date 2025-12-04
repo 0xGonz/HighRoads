@@ -23,14 +23,14 @@ const steps = [
 
 export function HowItWorks() {
   return (
-    <section className="py-20 bg-white">
+    <section className="py-24 lg:py-28 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section header - no entrance animation */}
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-primary-700 mb-4">
+        {/* Section header */}
+        <div className="text-center mb-20">
+          <h2 className="font-display tracking-heading text-3xl md:text-4xl font-bold text-primary-700 mb-5">
             How It Works
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
             Getting started is easy. Follow these simple steps to begin your journey to truck ownership.
           </p>
         </div>
@@ -40,25 +40,25 @@ export function HowItWorks() {
             <div key={step.number} className="relative">
               {/* Static connector line */}
               {index < steps.length - 1 && (
-                <div className="hidden md:block absolute top-16 left-1/2 w-full h-0.5 bg-gradient-to-r from-primary-300 to-accent/50" />
+                <div className="hidden md:block absolute top-16 left-1/2 w-full h-0.5 bg-gradient-to-r from-primary-200 to-accent/30" />
               )}
 
-              {/* Card with hover effects only */}
-              <div className="relative bg-white rounded-xl p-8 text-center group transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5">
+              {/* Card with hover effects */}
+              <div className="relative bg-white rounded-xl p-8 lg:p-10 text-center group transition-all duration-300 ease-smooth hover:shadow-soft-lg hover:-translate-y-1 border border-transparent hover:border-gray-100">
                 <div className="relative inline-block mb-6">
-                  {/* Icon circle - hover only */}
-                  <div className="w-20 h-20 bg-primary-700 rounded-full flex items-center justify-center mx-auto transition-transform duration-200 group-hover:scale-105">
+                  {/* Icon circle */}
+                  <div className="w-20 h-20 bg-gradient-to-br from-primary-700 to-primary-600 rounded-full flex items-center justify-center mx-auto transition-transform duration-300 ease-smooth group-hover:scale-105 shadow-soft">
                     <step.icon className="h-10 w-10 text-white" />
                   </div>
                   {/* Number badge */}
-                  <span className="absolute -top-2 -right-2 w-8 h-8 bg-accent text-white rounded-full flex items-center justify-center text-sm font-bold shadow-md">
+                  <span className="absolute -top-2 -right-2 w-8 h-8 bg-accent text-white rounded-full flex items-center justify-center text-sm font-bold shadow-glow-accent">
                     {step.number}
                   </span>
                 </div>
-                <h3 className="text-xl font-bold text-primary-700 mb-3 transition-colors duration-200 group-hover:text-accent">
+                <h3 className="text-xl font-bold text-primary-700 mb-3 transition-colors duration-300 ease-smooth group-hover:text-accent">
                   {step.title}
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-gray-600 leading-relaxed">
                   {step.description}
                 </p>
               </div>

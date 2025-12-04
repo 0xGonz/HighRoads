@@ -33,18 +33,18 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             type={type}
             className={cn(
               'w-full px-4 py-3 border-2 rounded-lg',
-              'transition-all duration-200 ease-out',
-              'focus:outline-none focus:ring-0',
+              'transition-all duration-250 ease-smooth',
+              'focus:outline-none',
               'placeholder:text-gray-400',
               error
                 ? 'border-red-400 focus:border-red-500 bg-red-50/50 animate-shake'
-                : 'border-gray-200 hover:border-gray-300 focus:border-accent focus:shadow-md focus:shadow-accent/10',
+                : 'border-gray-200 hover:border-gray-300 focus:border-accent focus:ring-2 focus:ring-accent/10 focus:shadow-inner-soft',
               className
             )}
             {...props}
           />
           {/* Focus glow effect */}
-          <div className="absolute inset-0 rounded-lg opacity-0 group-focus-within:opacity-100 transition-opacity duration-200 pointer-events-none bg-gradient-to-r from-accent/5 to-transparent" />
+          <div className="absolute inset-0 rounded-lg opacity-0 group-focus-within:opacity-100 transition-opacity duration-300 ease-smooth pointer-events-none bg-gradient-to-r from-accent/5 via-accent/3 to-transparent" />
         </div>
         {error && (
           <p className="mt-1.5 text-sm text-red-500 flex items-center animate-fade-in">

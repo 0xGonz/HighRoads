@@ -4,25 +4,25 @@ import { Button } from '@/components/ui/Button'
 
 export function CTA() {
   return (
-    <section className="py-20 bg-white">
+    <section className="py-24 lg:py-28 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-gradient-to-r from-primary-700 to-primary-600 rounded-2xl p-8 md:p-12 text-center text-white">
+        <div className="bg-gradient-to-br from-primary-800 via-primary-700 to-primary-600 rounded-2xl p-8 md:p-14 text-center text-white shadow-soft-xl">
           {/* Trust badges */}
-          <div className="flex items-center justify-center gap-6 mb-6 text-gray-200">
-            <span className="flex items-center text-sm">
-              <Clock className="h-4 w-4 mr-1" />
+          <div className="flex items-center justify-center gap-8 mb-8 text-gray-200">
+            <span className="flex items-center text-sm font-medium">
+              <Clock className="h-4 w-4 mr-2" />
               5-Minute Application
             </span>
-            <span className="flex items-center text-sm">
-              <Shield className="h-4 w-4 mr-1" />
+            <span className="flex items-center text-sm font-medium">
+              <Shield className="h-4 w-4 mr-2" />
               No Credit Check
             </span>
           </div>
 
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+          <h2 className="font-display tracking-heading text-3xl md:text-4xl lg:text-5xl font-bold mb-5">
             Own Your Truck in Minutes
           </h2>
-          <p className="text-xl text-gray-100 max-w-2xl mx-auto mb-8">
+          <p className="text-xl text-gray-100 max-w-2xl mx-auto mb-10 leading-relaxed">
             Take the first step toward truck ownership today. Our simple application takes just 5 minutes, and we&apos;ll respond within 24 hours.
           </p>
 
@@ -30,7 +30,7 @@ export function CTA() {
             <Link href="/apply">
               <Button size="lg" className="text-lg group">
                 Apply in 5 Minutes
-                <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 ease-smooth group-hover:translate-x-1" />
               </Button>
             </Link>
             <Link href="/how-it-works">
@@ -40,7 +40,7 @@ export function CTA() {
             </Link>
           </div>
 
-          <p className="mt-8 text-gray-100 text-base">
+          <p className="mt-10 text-gray-200 text-base">
             Pre-approved in minutes. No obligations. Start your journey to ownership today.
           </p>
         </div>

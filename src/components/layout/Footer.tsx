@@ -3,24 +3,24 @@ import { Truck, Mail, MapPin } from 'lucide-react'
 
 export function Footer() {
   return (
-    <footer className="bg-primary-900 text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+    <footer className="bg-gradient-to-b from-primary-900 to-primary-950 text-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           {/* Brand */}
           <div className="col-span-1 md:col-span-2">
-            <div className="flex items-center space-x-2 mb-4">
+            <div className="flex items-center space-x-2.5 mb-5">
               <Truck className="h-8 w-8 text-accent" />
               <span className="text-xl font-bold">High Road Technologies</span>
             </div>
-            <p className="text-gray-300 max-w-md mb-6">
+            <p className="text-gray-300 max-w-md mb-6 leading-relaxed">
               Empowering drivers to own their future. Lease-to-own trucking with
               flexible payments, top carriers, and full support every step of the way.
             </p>
             {/* Social Links */}
-            <div className="flex space-x-4">
+            <div className="flex space-x-3">
               <a
                 href="#"
-                className="text-gray-400 hover:text-white transition-colors"
+                className="w-10 h-10 rounded-full bg-primary-800/50 flex items-center justify-center text-gray-400 hover:bg-accent hover:text-white transition-all duration-300 ease-smooth"
                 aria-label="Facebook"
               >
                 <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
@@ -29,7 +29,7 @@ export function Footer() {
               </a>
               <a
                 href="#"
-                className="text-gray-400 hover:text-white transition-colors"
+                className="w-10 h-10 rounded-full bg-primary-800/50 flex items-center justify-center text-gray-400 hover:bg-accent hover:text-white transition-all duration-300 ease-smooth"
                 aria-label="LinkedIn"
               >
                 <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
@@ -38,7 +38,7 @@ export function Footer() {
               </a>
               <a
                 href="#"
-                className="text-gray-400 hover:text-white transition-colors"
+                className="w-10 h-10 rounded-full bg-primary-800/50 flex items-center justify-center text-gray-400 hover:bg-accent hover:text-white transition-all duration-300 ease-smooth"
                 aria-label="Instagram"
               >
                 <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
@@ -112,8 +112,8 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-primary-700 mt-8 pt-8 text-center text-gray-400">
-          <p>&copy; {new Date().getFullYear()} High Road Technologies Partners LLC. All rights reserved.</p>
+        <div className="border-t border-primary-800 mt-12 pt-8 text-center text-gray-500">
+          <p className="text-sm">&copy; {new Date().getFullYear()} High Road Technologies Partners LLC. All rights reserved.</p>
         </div>
       </div>
     </footer>

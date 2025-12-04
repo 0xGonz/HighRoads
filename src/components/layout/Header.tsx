@@ -2,13 +2,22 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Menu, X, Truck } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
   const pathname = usePathname()
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10)
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   const navigation = [
     { name: 'Home', href: '/' },
@@ -25,13 +34,19 @@ export function Header() {
   }
 
   return (
-    <header className="bg-primary-700 text-white sticky top-0 z-50">
+    <header
+      className={`text-white sticky top-0 z-50 transition-all duration-300 ease-smooth ${
+        isScrolled
+          ? 'bg-primary-700/95 backdrop-blur-md shadow-soft-lg'
+          : 'bg-primary-700'
+      }`}
+    >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <Link href="/" className="flex items-center space-x-2 hover:opacity-90 transition-opacity">
-              <Truck className="h-8 w-8 text-accent" />
-              <span className="text-xl font-bold">High Road</span>
+            <Link href="/" className="flex items-center space-x-2.5 group">
+              <Truck className="h-8 w-8 text-accent transition-transform duration-300 ease-smooth group-hover:scale-105" />
+              <span className="text-xl font-bold transition-colors duration-200 group-hover:text-gray-100">High Road</span>
             </Link>
           </div>
 

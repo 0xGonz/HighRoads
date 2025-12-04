@@ -1,10 +1,25 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import dynamic from 'next/dynamic'
 import './globals.css'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 
-const inter = Inter({ subsets: ['latin'] })
+// Dynamically import ChatWidget to avoid SSR issues with Vapi SDK
+const ChatWidget = dynamic(() => import('@/components/widget/ChatWidget').then(mod => mod.ChatWidget), {
+  ssr: false
+})
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+})
+
+const interTight = Inter({
+  subsets: ['latin'],
+  weight: ['600', '700', '800'],
+  variable: '--font-inter-tight',
+})
 
 export const metadata: Metadata = {
   title: 'High Road Technologies | Lease-to-Own Trucking',
@@ -19,12 +34,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${inter.variable} ${interTight.variable} font-sans`}>
         <Header />
         <main className="min-h-screen">
           {children}
         </main>
         <Footer />
+        <ChatWidget />
       </body>
     </html>
   )
