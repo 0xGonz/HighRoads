@@ -3,8 +3,9 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState, useEffect } from 'react'
-import { Menu, X, Truck } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
+import { SemiTruckIcon } from '@/components/ui/SemiTruckIcon'
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -45,7 +46,7 @@ export function Header() {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link href="/" className="flex items-center space-x-2.5 group">
-              <Truck className="h-8 w-8 text-accent transition-transform duration-300 ease-smooth group-hover:scale-105" />
+              <SemiTruckIcon className="h-8 w-8 text-accent transition-transform duration-300 ease-smooth group-hover:scale-105" />
               <span className="text-xl font-bold transition-colors duration-200 group-hover:text-gray-100">High Road</span>
             </Link>
           </div>

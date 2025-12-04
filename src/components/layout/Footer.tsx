@@ -1,5 +1,6 @@
 import Link from 'next/link'
-import { Truck, Mail, MapPin } from 'lucide-react'
+import { Mail, MapPin } from 'lucide-react'
+import { SemiTruckIcon } from '@/components/ui/SemiTruckIcon'
 
 export function Footer() {
   return (
@@ -9,7 +10,7 @@ export function Footer() {
           {/* Brand */}
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center space-x-2.5 mb-5">
-              <Truck className="h-8 w-8 text-accent" />
+              <SemiTruckIcon className="h-8 w-8 text-accent" />
               <span className="text-xl font-bold">High Road Partners LLC</span>
             </div>
             <p className="text-gray-300 max-w-md mb-6 leading-relaxed">
