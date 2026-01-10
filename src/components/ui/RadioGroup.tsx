@@ -34,12 +34,11 @@ const RadioGroup = forwardRef<HTMLInputElement, RadioGroupProps>(
             <label
               key={option.value}
               className={cn(
-                'relative flex items-start cursor-pointer p-4 border-2 rounded-xl',
+                'relative flex items-start cursor-pointer p-4 border-2 rounded-lg',
                 'transition-all duration-200 ease-out',
-                'hover:scale-[1.01]',
                 'focus-within:ring-2 focus-within:ring-primary-600 focus-within:ring-offset-2',
                 value === option.value
-                  ? 'border-primary-600 bg-primary-50 shadow-md shadow-primary-600/10'
+                  ? 'border-primary-600 bg-primary-50'
                   : 'border-gray-200 hover:border-primary-300 hover:bg-gray-50/50',
                 orientation === 'horizontal' && 'flex-1 min-w-[150px]'
               )}
@@ -74,10 +73,6 @@ const RadioGroup = forwardRef<HTMLInputElement, RadioGroupProps>(
                       : 'scale-0 opacity-0'
                   )}
                 />
-                {/* Pulse effect when selected */}
-                {value === option.value && (
-                  <span className="absolute inset-0 rounded-full bg-primary-200 animate-ping" style={{ animationDuration: '1s', animationIterationCount: '1' }} />
-                )}
               </div>
               <div className="ml-3">
                 <span className={cn(
@@ -92,22 +87,6 @@ const RadioGroup = forwardRef<HTMLInputElement, RadioGroupProps>(
                   </p>
                 )}
               </div>
-              {/* Selected indicator */}
-              {value === option.value && (
-                <div className="absolute top-3 right-3">
-                  <svg
-                    className="w-5 h-5 text-primary-700 animate-scale-bounce"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </div>
-              )}
             </label>
           ))}
         </div>
