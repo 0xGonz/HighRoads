@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function DocumentsPage() {
   return (
-    <div className="min-h-screen bg-gray-100 py-16">
+    <div className="min-h-screen bg-gray-50 py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl mx-auto">
         <div className="text-center mb-8">
@@ -22,9 +22,9 @@ export default function DocumentsPage() {
 
         <DocumentUpload />
 
-        <div className="mt-8 bg-blue-50 border border-blue-200 rounded-lg p-4">
-          <h3 className="font-semibold text-blue-800 mb-2">Need help?</h3>
-          <p className="text-sm text-blue-700">
+        <div className="mt-8 bg-primary-50 border border-primary-200 rounded-lg p-4">
+          <h3 className="font-semibold text-primary-800 mb-2">Need help?</h3>
+          <p className="text-sm text-primary-700">
             If you have trouble uploading documents, you can email them directly to{' '}
             <a href="mailto:documents@highroadcapitalllc.com" className="underline">
               documents@highroadcapitalllc.com

@@ -204,7 +204,7 @@ export function DocumentUpload() {
 
   if (submitSuccess) {
     return (
-      <div className="bg-white rounded-xl shadow-lg p-8 text-center animate-fade-in-up">
+      <div className="bg-white rounded-lg shadow-soft p-8 text-center animate-fade-in-up">
         <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
           <CheckCircle className="h-8 w-8 text-green-600" />
         </div>
@@ -221,7 +221,7 @@ export function DocumentUpload() {
 
   if (!isVerified) {
     return (
-      <div className="bg-white rounded-xl shadow-lg p-6 sm:p-8">
+      <div className="bg-white rounded-lg shadow-soft p-6 sm:p-8">
         <div className="text-center mb-6">
           <div className="w-14 h-14 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <Shield className="h-7 w-7 text-primary-600" />
@@ -295,7 +295,7 @@ export function DocumentUpload() {
           return (
             <div
               key={docType.id}
-              className="bg-white rounded-xl shadow-lg p-6 border-2 border-dashed border-gray-200 hover:border-accent transition-colors"
+              className="bg-white rounded-lg shadow-soft p-6 border-2 border-dashed border-gray-200 hover:border-accent transition-colors"
             >
               <div className="flex items-start justify-between mb-3">
                 <div>

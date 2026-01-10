@@ -12,7 +12,7 @@ export function MidPageCTA({
   subtitle = "Check your eligibility in under 5 minutes. No credit check required."
 }: MidPageCTAProps) {
   return (
-    <section className="py-8 bg-gradient-to-r from-primary-800 to-primary-900">
+    <section className="py-10 bg-gradient-to-r from-primary-800 to-primary-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="text-center md:text-left">

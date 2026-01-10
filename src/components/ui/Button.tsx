@@ -12,7 +12,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const baseStyles = cn(
       // Traditional, professional styling
       'inline-flex items-center justify-center font-semibold',
-      'rounded', // Minimal rounding
+      'rounded-lg', // Match form input rounding
       'transition-colors duration-150',
       'focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
       'disabled:opacity-50 disabled:cursor-not-allowed',

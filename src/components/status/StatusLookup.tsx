@@ -73,7 +73,7 @@ export function StatusLookup() {
 
   if (result) {
     return (
-      <div className="bg-white rounded-xl shadow-lg p-6 sm:p-8 animate-fade-in-up">
+      <div className="bg-white rounded-lg shadow-soft p-6 sm:p-8 animate-fade-in-up">
         <div className="text-center mb-8">
           <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <CheckCircle className="h-8 w-8 text-green-600" />
@@ -183,7 +183,7 @@ export function StatusLookup() {
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6 sm:p-8">
+    <div className="bg-white rounded-lg shadow-soft p-6 sm:p-8">
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <Input
           label="Email Address"

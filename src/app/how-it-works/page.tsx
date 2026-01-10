@@ -149,7 +149,7 @@ function OverviewTab() {
             <h2 className="text-2xl font-bold text-primary-800 mb-8 text-center">What We Provide</h2>
           </AnimateIn>
           <AnimateIn animation="scale" delay={100}>
-            <div className="bg-white rounded-2xl shadow-soft border border-gray-100 p-8 max-w-3xl mx-auto
+            <div className="bg-white rounded-lg shadow-soft border border-gray-100 p-8 max-w-3xl mx-auto
               transition-all duration-300 hover:shadow-soft-lg hover:-translate-y-1">
               <p className="text-gray-600 mb-6">Trucks in the program include:</p>
               <ul className="space-y-3">
@@ -184,7 +184,7 @@ function OverviewTab() {
             <h2 className="text-2xl font-bold text-primary-800 mb-8 text-center">How the Money Works</h2>
           </AnimateIn>
           <AnimateIn animation="fade-up" delay={100}>
-            <div className="bg-gray-50 rounded-2xl p-8 max-w-3xl mx-auto">
+            <div className="bg-gray-50 rounded-lg p-8 max-w-3xl mx-auto">
               <div className="space-y-4 text-gray-600">
                 <p>
                   The carrier pays {COMPANY.shortName} each week. Fuel, insurance, tolls, and other operating
@@ -249,7 +249,7 @@ function OwnershipTab() {
 
           {/* Ownership Timeline Table */}
           <AnimateIn animation="scale" delay={100}>
-            <div className="bg-white rounded-2xl shadow-soft border border-gray-100 overflow-hidden mb-12
+            <div className="bg-white rounded-lg shadow-soft border border-gray-100 overflow-hidden mb-12
               transition-all duration-300 hover:shadow-soft-lg">
               <table className="w-full">
                 <thead>
@@ -304,7 +304,7 @@ function OwnershipTab() {
 
           {/* Walk Away Option */}
           <AnimateIn animation="fade-up" delay={200}>
-            <div className="group bg-white rounded-2xl shadow-soft border border-gray-100 p-8
+            <div className="group bg-white rounded-lg shadow-soft border border-gray-100 p-8
               transition-all duration-300 hover:shadow-soft-lg hover:-translate-y-1">
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center flex-shrink-0
@@ -334,7 +334,7 @@ function ProvingGroundTab() {
         <div className="max-w-3xl mx-auto">
           {/* Proving Ground */}
           <AnimateIn animation="fade-up">
-            <div className="group bg-white rounded-2xl shadow-soft border border-gray-100 p-8 mb-8
+            <div className="group bg-white rounded-lg shadow-soft border border-gray-100 p-8 mb-8
               transition-all duration-300 hover:shadow-soft-lg hover:-translate-y-1">
               <div className="flex items-start gap-4 mb-6">
                 <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center flex-shrink-0
@@ -371,7 +371,7 @@ function ProvingGroundTab() {
 
           {/* Ongoing Requirements */}
           <AnimateIn animation="fade-up" delay={100}>
-            <div className="group bg-white rounded-2xl shadow-soft border border-gray-100 p-8 mb-8
+            <div className="group bg-white rounded-lg shadow-soft border border-gray-100 p-8 mb-8
               transition-all duration-300 hover:shadow-soft-lg hover:-translate-y-1">
               <div className="flex items-start gap-4 mb-6">
                 <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center flex-shrink-0
@@ -400,7 +400,7 @@ function ProvingGroundTab() {
 
           {/* Standard Split */}
           <AnimateIn animation="scale" delay={200}>
-            <div className="bg-primary-800 text-white rounded-2xl p-8 transition-all duration-300 hover:shadow-glow-accent-lg">
+            <div className="bg-primary-800 text-white rounded-lg p-8 transition-all duration-300 hover:shadow-glow-accent-lg">
               <div className="flex items-start gap-4 mb-6">
                 <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0
                   transition-all duration-300 hover:bg-white/30 hover:scale-110">
@@ -466,7 +466,7 @@ function CarrierTab() {
 
           {/* Rules */}
           <AnimateIn animation="scale" delay={100}>
-            <div className="bg-white rounded-2xl shadow-soft border border-gray-100 p-8 mb-8
+            <div className="bg-white rounded-lg shadow-soft border border-gray-100 p-8 mb-8
               transition-all duration-300 hover:shadow-soft-lg">
               <h3 className="font-bold text-primary-800 text-lg mb-6">
                 Carrier Rules to Protect Earnings and Stability
@@ -506,7 +506,7 @@ function CarrierTab() {
 
           {/* Who This Is For */}
           <AnimateIn animation="fade-up" delay={300}>
-            <div className="bg-primary-50 rounded-2xl p-8 transition-all duration-300 hover:bg-primary-100 hover:shadow-soft">
+            <div className="bg-primary-50 rounded-lg p-8 transition-all duration-300 hover:bg-primary-100 hover:shadow-soft">
               <h3 className="font-bold text-primary-800 text-lg mb-4">Who This Program Is For</h3>
               <p className="text-gray-700">
                 This program is built for professional drivers who want real ownership, freedom to choose

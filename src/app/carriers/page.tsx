@@ -44,7 +44,7 @@ export default function CarriersPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-2xl font-bold text-primary-800 mb-8 text-center">What {COMPANY.shortName} Provides</h2>
-            <div className="bg-white rounded-2xl shadow-soft border border-gray-100 p-8">
+            <div className="bg-white rounded-lg shadow-soft border border-gray-100 p-8">
               <p className="text-gray-600 mb-6">
                 {COMPANY.shortName} owns and maintains a growing fleet of late-model sleeper trucks,
                 including {PROGRAM.truckYears} {PROGRAM.truckModel}s, that are available to be placed
@@ -72,7 +72,7 @@ export default function CarriersPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-2xl font-bold text-primary-800 mb-8 text-center">How Drivers Are Placed</h2>
-            <div className="bg-white rounded-2xl shadow-soft border border-gray-100 p-8 mb-8">
+            <div className="bg-white rounded-lg shadow-soft border border-gray-100 p-8 mb-8">
               <p className="text-gray-600 mb-6">
                 {CARRIER_INFO.howDriversArePlaced}
               </p>
@@ -88,7 +88,7 @@ export default function CarriersPage() {
             </div>
 
             {/* Clarifications */}
-            <div className="bg-gray-50 rounded-2xl p-8">
+            <div className="bg-gray-50 rounded-lg p-8">
               <h3 className="font-semibold text-primary-800 mb-4">Important Clarifications</h3>
               <ul className="space-y-3">
                 {CARRIER_INFO.clarifications.map((item) => (
@@ -109,7 +109,7 @@ export default function CarriersPage() {
           <div className="max-w-3xl mx-auto">
             <h2 className="text-2xl font-bold text-primary-800 mb-8 text-center">How the Partnership Works</h2>
             <div className="grid md:grid-cols-2 gap-6">
-              <div className="bg-white rounded-2xl shadow-soft border border-gray-100 p-6">
+              <div className="bg-white rounded-lg shadow-soft border border-gray-100 p-6">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-10 h-10 bg-primary-100 rounded-lg flex items-center justify-center">
                     <Building2 className="h-5 w-5 text-primary-700" />
@@ -125,7 +125,7 @@ export default function CarriersPage() {
                   ))}
                 </ul>
               </div>
-              <div className="bg-white rounded-2xl shadow-soft border border-gray-100 p-6">
+              <div className="bg-white rounded-lg shadow-soft border border-gray-100 p-6">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-10 h-10 bg-primary-100 rounded-lg flex items-center justify-center">
                     <Truck className="h-5 w-5 text-primary-700" />
@@ -146,7 +146,7 @@ export default function CarriersPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-2xl font-bold text-primary-800 mb-8 text-center">Why Carriers Work With {COMPANY.shortName}</h2>
-            <div className="bg-white rounded-2xl shadow-soft border border-gray-100 p-8 mb-8">
+            <div className="bg-white rounded-lg shadow-soft border border-gray-100 p-8 mb-8">
               <p className="text-gray-600 mb-6">Our model allows carriers to:</p>
               <ul className="space-y-3">
                 {CARRIER_INFO.whyCarriersPartner.map((item) => (
@@ -157,7 +157,7 @@ export default function CarriersPage() {
                 ))}
               </ul>
             </div>
-            <div className="bg-primary-50 rounded-2xl p-8">
+            <div className="bg-primary-50 rounded-lg p-8">
               <p className="text-primary-800 font-medium text-center">
                 Because drivers are working toward owning their truck, they are more committed,
                 careful, and consistent than traditional lease or rental drivers.

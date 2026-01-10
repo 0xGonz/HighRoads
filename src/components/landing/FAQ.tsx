@@ -16,7 +16,7 @@ export function FAQ() {
   const FAQItem = ({ faq, index }: { faq: typeof FAQ_ITEMS[0]; index: number }) => (
     <div
       className={cn(
-        'bg-white rounded border overflow-hidden',
+        'bg-white rounded-lg border overflow-hidden',
         openIndex === index
           ? 'border-primary-600'
           : 'border-gray-200'

@@ -171,7 +171,7 @@ export function ReferralProgram() {
           </p>
 
           {isSuccess ? (
-            <div className="bg-white rounded-xl shadow-lg p-8 text-center animate-fade-in-up">
+            <div className="bg-white rounded-lg shadow-soft p-8 text-center animate-fade-in-up">
               <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <CheckCircle className="h-8 w-8 text-green-600" />
               </div>
@@ -191,7 +191,7 @@ export function ReferralProgram() {
               </div>
             </div>
           ) : (
-            <div className="bg-white rounded-xl shadow-lg p-6 sm:p-8">
+            <div className="bg-white rounded-lg shadow-soft p-6 sm:p-8">
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                 {/* Your Info */}
                 <div>

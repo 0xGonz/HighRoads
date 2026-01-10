@@ -33,8 +33,8 @@ export function TrustBadges() {
               key={badge.title}
               className="flex flex-col items-center text-center px-2"
             >
-              <div className="w-10 h-10 bg-white rounded border border-gray-200 flex items-center justify-center mb-2">
-                <badge.icon className="h-5 w-5 text-primary-700" />
+              <div className="w-12 h-12 bg-white rounded-lg border border-gray-200 flex items-center justify-center mb-2">
+                <badge.icon className="h-6 w-6 text-primary-700" />
               </div>
               <h3 className="font-semibold text-sm text-gray-900">{badge.title}</h3>
               <p className="text-xs text-gray-500 mt-0.5">{badge.description}</p>

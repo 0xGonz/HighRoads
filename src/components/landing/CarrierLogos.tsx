@@ -2,7 +2,7 @@ import { Truck, MapPin, Package } from 'lucide-react'
 
 export function CarrierLogos() {
   return (
-    <section className="py-14 bg-white">
+    <section className="py-12 lg:py-16 bg-white">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 className="text-2xl font-bold text-gray-900 mb-3">
           Carrier Matching

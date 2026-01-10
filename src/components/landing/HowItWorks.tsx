@@ -89,8 +89,8 @@ export function HowItWorks() {
               <div className="relative bg-white rounded-lg p-6 text-center border border-gray-200">
                 <div className="relative inline-block mb-4">
                   {/* Icon circle */}
-                  <div className="w-14 h-14 bg-primary-800 rounded-full flex items-center justify-center mx-auto">
-                    <step.icon className="h-7 w-7 text-white" />
+                  <div className="w-12 h-12 bg-primary-800 rounded-full flex items-center justify-center mx-auto">
+                    <step.icon className="h-6 w-6 text-white" />
                   </div>
                   {/* Number badge */}
                   <span className="absolute -top-1 -right-1 w-6 h-6 bg-primary-600 text-white rounded-full flex items-center justify-center text-xs font-bold">

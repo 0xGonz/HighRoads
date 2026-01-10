@@ -5,7 +5,7 @@ import { PROGRAM } from '@/lib/config'
 
 export function CalculatorPreview() {
   return (
-    <section className="py-14 lg:py-16 bg-gray-50">
+    <section className="py-12 lg:py-16 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
           {/* Left side - Text */}
@@ -15,7 +15,7 @@ export function CalculatorPreview() {
               <span className="text-sm font-medium text-primary-700">Ownership Calculator</span>
             </div>
 
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
               See Your Path to Ownership
             </h2>
 
@@ -54,7 +54,7 @@ export function CalculatorPreview() {
           </div>
 
           {/* Right side - Preview Card */}
-          <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+          <div className="bg-white rounded-lg shadow-xl p-8 border border-gray-100">
             <div className="text-center mb-6">
               <p className="text-sm text-gray-500 mb-2">Ownership Timeline</p>
               <p className="text-4xl font-bold text-primary-700">1 - 3 years</p>
