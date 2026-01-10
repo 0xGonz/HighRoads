@@ -28,7 +28,7 @@ export function CTA() {
                     </Button>
                   </Link>
                   <Link href="/how-it-works">
-                    <Button variant="outline" size="lg" className="w-full sm:w-auto px-6 border-white/40 text-white hover:bg-white hover:text-primary-900">
+                    <Button variant="outline" size="lg" className="w-full sm:w-auto px-6 bg-white text-primary-800 border-white hover:bg-gray-100">
                       Learn More
                     </Button>
                   </Link>
