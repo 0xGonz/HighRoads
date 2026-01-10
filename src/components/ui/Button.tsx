@@ -10,45 +10,39 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant = 'primary', size = 'md', isLoading, children, disabled, ...props }, ref) => {
     const baseStyles = cn(
-      // Base layout and typography
-      'relative inline-flex items-center justify-center font-semibold rounded-lg',
-      // Smooth transitions for all properties
-      'transition-all duration-200 ease-out',
-      // Focus states with ring animation
+      // Traditional, professional styling
+      'inline-flex items-center justify-center font-semibold',
+      'rounded', // Minimal rounding
+      'transition-colors duration-150',
       'focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
-      // Active/pressed state
-      'active:scale-[0.98] active:transition-none',
-      // Disabled states
-      'disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100',
-      // Prevent text selection
+      'disabled:opacity-50 disabled:cursor-not-allowed',
       'select-none'
     )
 
     const variants = {
       primary: cn(
-        // Premium navy gradient with subtle gold undertone
-        'bg-gradient-to-r from-primary-700 via-primary-800 to-primary-900 text-white',
-        'shadow-lg shadow-primary-900/25 focus-visible:ring-primary-500',
-        'hover:from-primary-600 hover:via-primary-700 hover:to-primary-800',
-        'hover:shadow-xl hover:shadow-primary-900/30 hover:-translate-y-0.5',
-        'active:from-primary-800 active:via-primary-900 active:to-primary-950 active:shadow-lg'
+        'bg-primary-800 text-white',
+        'border border-primary-900',
+        'focus-visible:ring-primary-500',
+        'hover:bg-primary-900',
+        'active:bg-primary-950'
       ),
       secondary: cn(
-        // Gold accent for high-impact CTAs
-        'bg-gradient-to-r from-accent-500 to-accent-600 text-white',
-        'shadow-lg shadow-accent-500/25 focus-visible:ring-accent-400',
-        'hover:from-accent-400 hover:to-accent-500 hover:shadow-xl hover:-translate-y-0.5',
-        'active:from-accent-600 active:to-accent-700 active:shadow-lg'
+        'bg-accent-600 text-white',
+        'border border-accent-700',
+        'focus-visible:ring-accent-500',
+        'hover:bg-accent-700',
+        'active:bg-accent-800'
       ),
       outline: cn(
-        'border-2 border-primary-700 text-primary-700 bg-transparent focus-visible:ring-primary-500',
-        'hover:bg-primary-700 hover:text-white hover:shadow-soft hover:-translate-y-0.5',
-        'active:bg-primary-800 active:border-primary-800'
-      ),
-      ghost: cn(
-        'text-primary-700 bg-transparent focus-visible:ring-primary-500',
+        'border border-primary-800 text-primary-800 bg-white focus-visible:ring-primary-500',
         'hover:bg-primary-50',
         'active:bg-primary-100'
+      ),
+      ghost: cn(
+        'text-primary-800 bg-transparent focus-visible:ring-primary-500',
+        'hover:bg-gray-100',
+        'active:bg-gray-200'
       ),
     }
 

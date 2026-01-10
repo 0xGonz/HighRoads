@@ -5,38 +5,38 @@ import { COMPANY, PROGRAM } from '@/lib/config'
 
 export function CTA() {
   return (
-    <section className="py-20 lg:py-28 bg-gray-50">
+    <section className="py-12 lg:py-16 bg-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative bg-gradient-to-br from-primary-800 via-primary-800 to-primary-900 rounded-3xl p-10 md:p-12 text-white shadow-soft-xl overflow-hidden">
+        <div className="bg-primary-800 rounded-lg p-8 md:p-10 text-white">
 
           <div className="relative">
             <div className="grid md:grid-cols-2 gap-8 items-center">
               {/* Left side - CTA */}
               <div className="text-center md:text-left">
-                <h2 className="font-display text-3xl md:text-4xl font-bold mb-4 tracking-tight">
+                <h2 className="text-2xl md:text-3xl font-bold mb-3">
                   Ready to Earn Your Truck?
                 </h2>
-                <p className="text-lg text-gray-300 mb-6">
+                <p className="text-gray-300 mb-5">
                   Check your eligibility today. No credit check required. We&apos;ll review your application and get back to you within 24 hours.
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
                   <Link href="/apply">
-                    <Button size="lg" className="w-full sm:w-auto px-6 group">
-                      Check Eligibility
-                      <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-200 group-hover:translate-x-1" />
+                    <Button variant="secondary" size="lg" className="w-full sm:w-auto px-6">
+                      Apply Now
+                      <ArrowRight className="ml-2 h-5 w-5" />
                     </Button>
                   </Link>
                   <Link href="/how-it-works">
-                    <Button variant="outline" size="lg" className="w-full sm:w-auto px-6 border-white/20 text-white hover:bg-white/10 hover:border-white/30 hover:text-white">
-                      How It Works
+                    <Button variant="outline" size="lg" className="w-full sm:w-auto px-6 border-white/40 text-white hover:bg-white hover:text-primary-900">
+                      Learn More
                     </Button>
                   </Link>
                 </div>
               </div>
 
               {/* Right side - Contact Info */}
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/10">
+              <div className="bg-white/10 rounded-lg p-5 border border-white/20">
                 <h3 className="font-bold mb-4">Have Questions? Let&apos;s Talk</h3>
 
                 <div className="space-y-4">

@@ -26,13 +26,13 @@ const values = [
 
 export function ValueProps() {
   return (
-    <section className="py-16 lg:py-20 bg-gray-50">
+    <section className="py-12 lg:py-16 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="font-display text-3xl md:text-4xl font-bold text-primary-800 mb-4 tracking-tight">
+        <div className="text-center mb-8">
+          <h2 className="text-2xl md:text-3xl font-bold text-primary-800 mb-3">
             Why Choose {COMPANY.shortName}?
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-gray-600 max-w-2xl mx-auto">
             A performance-based ownership program built for drivers who want a clear, fair path to owning their truck.
           </p>
         </div>
@@ -41,18 +41,12 @@ export function ValueProps() {
           {values.map((value) => (
             <div
               key={value.title}
-              className="group bg-white rounded-2xl p-7 shadow-soft border border-gray-100/50
-                transition-all duration-300 ease-out
-                hover:shadow-soft-lg hover:-translate-y-1 hover:border-primary-200/50"
+              className="bg-white rounded-lg p-6 border border-gray-200"
             >
-              <div className="w-14 h-14 bg-gradient-to-br from-primary-50 to-primary-100 rounded-xl
-                flex items-center justify-center mb-5
-                transition-all duration-300
-                group-hover:from-primary-100 group-hover:to-primary-200
-                group-hover:scale-110 group-hover:shadow-soft">
-                <value.icon className="h-7 w-7 text-primary-700 transition-colors group-hover:text-primary-800" />
+              <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mb-4">
+                <value.icon className="h-6 w-6 text-primary-700" />
               </div>
-              <h3 className="font-display text-lg font-bold text-primary-800 mb-2">
+              <h3 className="text-lg font-bold text-primary-800 mb-2">
                 {value.title}
               </h3>
               <p className="text-sm text-gray-600 leading-relaxed">

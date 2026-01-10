@@ -1,32 +1,42 @@
 'use client'
 
 import Link from 'next/link'
-import Image from 'next/image'
 import { ArrowRight, CheckCircle } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { COMPANY, BENEFITS } from '@/lib/config'
 
 export function Hero() {
   const [isLoaded, setIsLoaded] = useState(false)
+  const videoRef = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {
     setIsLoaded(true)
+    // Ensure video plays on mobile
+    if (videoRef.current) {
+      videoRef.current.play().catch(() => {
+        // Autoplay was prevented, video will show first frame
+      })
+    }
   }, [])
 
   return (
     <section className="relative min-h-[600px] lg:min-h-[700px] text-white overflow-hidden">
-      {/* Background Image */}
+      {/* Background Video */}
       <div className="absolute inset-0">
-        <Image
-          src="/images/hero-truck.jpg"
-          alt="Professional truck driver with semi truck"
-          fill
-          priority
-          className="object-cover object-center"
-        />
+        <video
+          ref={videoRef}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+          poster="/images/hero-truck.jpg"
+        >
+          <source src="/videos/hero-background.mp4" type="video/mp4" />
+        </video>
         {/* Dark overlay for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-r from-primary-900/95 via-primary-900/80 to-primary-900/40" />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary-900/90 via-primary-900/75 to-primary-900/50" />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28 lg:py-32 w-full">
@@ -42,25 +52,24 @@ export function Hero() {
 
           {/* Main heading */}
           <h1
-            className={`font-display text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.05] tracking-tight mb-6 transition-all duration-500 delay-100 [text-shadow:_0_4px_24px_rgba(0,0,0,0.3)] ${
+            className={`font-display text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight mb-6 transition-all duration-500 delay-100 ${
               isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}
           >
-            <span className="block">STEER YOUR</span>
-            <span className="block text-accent-400 [text-shadow:_0_2px_20px_rgba(201,162,39,0.3)]">CAREER FORWARD</span>
+            Own Your Truck Through Performance
           </h1>
 
           {/* Subtitle */}
           <p
-            className={`text-xl md:text-2xl text-gray-100 mb-8 leading-relaxed max-w-xl transition-all duration-500 delay-200 ${
+            className={`text-lg md:text-xl text-gray-200 mb-8 leading-relaxed max-w-xl transition-all duration-500 delay-200 ${
               isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}
           >
-            Secure Your Future with {COMPANY.shortName}&apos;s Innovative Truck Ownership Program.
+            No credit check. No down payment. Earn ownership through a 50/50 profit split with {COMPANY.shortName}.
           </p>
 
           {/* Benefits list */}
-          <ul className="space-y-3 mb-10">
+          <ul className="space-y-2 mb-10">
             {BENEFITS.ownership.map((benefit, index) => (
               <li
                 key={benefit}
@@ -69,8 +78,8 @@ export function Hero() {
                 }`}
                 style={{ transitionDelay: `${250 + index * 75}ms` }}
               >
-                <CheckCircle className="h-5 w-5 text-accent-400 flex-shrink-0" />
-                <span className="text-gray-100 font-medium">{benefit}</span>
+                <CheckCircle className="h-5 w-5 text-green-400 flex-shrink-0" />
+                <span className="text-gray-200">{benefit}</span>
               </li>
             ))}
           </ul>
@@ -82,14 +91,14 @@ export function Hero() {
             }`}
           >
             <Link href="/apply">
-              <Button size="lg" className="w-full sm:w-auto text-lg px-8 group">
-                Get Started Today
-                <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-200 group-hover:translate-x-1" />
+              <Button variant="secondary" size="lg" className="w-full sm:w-auto">
+                Apply Now
+                <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
             <Link href="/how-it-works">
-              <Button variant="outline" size="lg" className="w-full sm:w-auto text-lg px-8 border-2 border-white/40 text-white backdrop-blur-sm hover:bg-white/10 hover:border-white/60 hover:text-white">
-                How It Works
+              <Button variant="outline" size="lg" className="w-full sm:w-auto bg-white text-primary-800 border-white hover:bg-gray-100">
+                Learn More
               </Button>
             </Link>
           </div>

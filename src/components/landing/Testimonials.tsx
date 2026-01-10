@@ -21,16 +21,13 @@ const programDetails = [
 
 export function Testimonials() {
   return (
-    <section className="py-16 lg:py-20 bg-primary-800 text-white relative overflow-hidden">
-      {/* Clean gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary-800 via-primary-800 to-primary-900" />
-
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="font-display text-3xl md:text-4xl font-bold mb-4 tracking-tight">
+    <section className="py-12 lg:py-16 bg-primary-800 text-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-8">
+          <h2 className="text-2xl md:text-3xl font-bold mb-3">
             Program Overview
           </h2>
-          <p className="text-lg text-gray-300 max-w-2xl mx-auto">
+          <p className="text-gray-300 max-w-2xl mx-auto">
             What to expect from our performance-based ownership program
           </p>
         </div>
@@ -39,16 +36,12 @@ export function Testimonials() {
           {programDetails.map((detail) => (
             <div
               key={detail.title}
-              className="group bg-white/[0.08] backdrop-blur-sm rounded-2xl p-7 border border-white/10
-                transition-all duration-300 ease-out
-                hover:bg-white/[0.12] hover:border-white/20 hover:-translate-y-1"
+              className="bg-white/10 rounded-lg p-6 border border-white/20"
             >
-              <div className="w-14 h-14 bg-white/10 rounded-xl flex items-center justify-center mb-5
-                transition-all duration-300
-                group-hover:bg-white/15 group-hover:scale-110">
-                <detail.icon className="h-7 w-7 text-accent-400 transition-colors group-hover:text-accent-300" />
+              <div className="w-12 h-12 bg-white/10 rounded-lg flex items-center justify-center mb-4">
+                <detail.icon className="h-6 w-6 text-white" />
               </div>
-              <h3 className="font-display font-bold text-lg mb-2">{detail.title}</h3>
+              <h3 className="font-bold text-lg mb-2">{detail.title}</h3>
               <p className="text-sm text-gray-300 leading-relaxed">
                 {detail.description}
               </p>

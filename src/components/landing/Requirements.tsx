@@ -18,27 +18,26 @@ const notRequired = [
 
 export function Requirements() {
   return (
-    <section className="py-16 lg:py-20 bg-white border-t border-gray-100">
+    <section className="py-12 lg:py-16 bg-white border-t border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto">
-          <div className="text-center mb-10">
-            <h2 className="font-display text-3xl md:text-4xl font-bold text-primary-800 mb-4 tracking-tight">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl md:text-3xl font-bold text-primary-800 mb-3">
               Program Requirements
             </h2>
-            <p className="text-lg text-gray-600">
+            <p className="text-gray-600">
               Here&apos;s what you need to qualify for our lease-to-own program.
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-6 mb-10">
             {/* Required */}
-            <div className="group bg-white rounded-2xl p-7 shadow-soft border border-gray-100/50
-              transition-all duration-300 hover:shadow-soft-lg hover:-translate-y-1">
-              <h3 className="font-display font-bold text-primary-800 mb-4">What You Need</h3>
+            <div className="bg-white rounded-lg p-6 border border-gray-200">
+              <h3 className="font-bold text-primary-800 mb-4">What You Need</h3>
               <ul className="space-y-3">
                 {requirements.map((req) => (
                   <li key={req.text} className="flex items-start space-x-2">
-                    <CheckCircle className="h-5 w-5 text-accent-500 flex-shrink-0 mt-0.5" />
+                    <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
                     <span className="text-sm text-gray-700">{req.text}</span>
                   </li>
                 ))}
@@ -46,9 +45,8 @@ export function Requirements() {
             </div>
 
             {/* Not Required */}
-            <div className="group bg-white rounded-2xl p-7 shadow-soft border border-gray-100/50
-              transition-all duration-300 hover:shadow-soft-lg hover:-translate-y-1">
-              <h3 className="font-display font-bold text-primary-800 mb-4">What You Don&apos;t Need</h3>
+            <div className="bg-white rounded-lg p-6 border border-gray-200">
+              <h3 className="font-bold text-primary-800 mb-4">What You Don&apos;t Need</h3>
               <ul className="space-y-3">
                 {notRequired.map((req) => (
                   <li key={req.text} className="flex items-start space-x-2">

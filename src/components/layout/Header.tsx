@@ -47,8 +47,8 @@ export function Header() {
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <Link href="/" className="flex items-center group">
-              <span className="font-display text-xl font-bold tracking-tight transition-colors duration-200 group-hover:text-accent-400">{COMPANY.shortName}</span>
+            <Link href="/" className="flex items-center">
+              <span className="font-display text-xl font-bold tracking-tight">{COMPANY.shortName}</span>
             </Link>
           </div>
 
@@ -58,20 +58,17 @@ export function Header() {
               <Link
                 key={item.name}
                 href={item.href}
-                className={`relative py-1 transition-colors duration-200 ${
+                className={`text-sm ${
                   isActive(item.href)
-                    ? 'text-white'
-                    : 'text-gray-200 hover:text-white'
-                }
-                after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-accent-400
-                after:transition-all after:duration-300
-                ${isActive(item.href) ? 'after:w-full' : 'after:w-0 hover:after:w-full'}`}
+                    ? 'text-white font-semibold'
+                    : 'text-gray-300 hover:text-white'
+                }`}
               >
                 {item.name}
               </Link>
             ))}
             <Link href="/apply">
-              <Button size="sm">Apply Now</Button>
+              <Button variant="secondary" size="sm">Apply Now</Button>
             </Link>
           </div>
 
@@ -112,7 +109,7 @@ export function Header() {
           ))}
           <div className="mt-4">
             <Link href="/apply" onClick={() => setIsMenuOpen(false)}>
-              <Button className="w-full">Apply Now</Button>
+              <Button variant="secondary" className="w-full">Apply Now</Button>
             </Link>
           </div>
         </div>

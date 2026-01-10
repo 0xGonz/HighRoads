@@ -4,15 +4,15 @@ import { COMPANY, PROGRAM } from '@/lib/config'
 
 export function Footer() {
   return (
-    <footer className="bg-primary-900 text-white border-t border-primary-700/50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
+    <footer className="bg-primary-900 text-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
           <div className="col-span-1 md:col-span-2">
-            <div className="flex items-center mb-5">
-              <span className="font-display text-xl font-bold tracking-tight">{COMPANY.name}</span>
+            <div className="mb-4">
+              <span className="text-lg font-bold">{COMPANY.name}</span>
             </div>
-            <p className="text-gray-300 max-w-md mb-6 leading-relaxed">
+            <p className="text-gray-400 text-sm max-w-md">
               Performance-based truck ownership program based in {COMPANY.location}.
               Earn your {PROGRAM.truckModels} through our {PROGRAM.profitSplit}/{PROGRAM.profitSplit} profit-split program.
             </p>
@@ -20,54 +20,40 @@ export function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h3 className="font-display text-lg font-semibold mb-5 tracking-tight">Quick Links</h3>
-            <ul className="space-y-2">
+            <h3 className="font-semibold mb-4">Quick Links</h3>
+            <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/how-it-works" className="relative inline-block text-gray-300 hover:text-white transition-colors duration-200
-                  after:absolute after:bottom-0 after:left-0 after:w-0 after:h-px after:bg-accent-400
-                  after:transition-all after:duration-300 hover:after:w-full">
+                <Link href="/how-it-works" className="text-gray-400 hover:text-white">
                   How It Works
                 </Link>
               </li>
               <li>
-                <Link href="/carriers" className="relative inline-block text-gray-300 hover:text-white transition-colors duration-200
-                  after:absolute after:bottom-0 after:left-0 after:w-0 after:h-px after:bg-accent-400
-                  after:transition-all after:duration-300 hover:after:w-full">
+                <Link href="/carriers" className="text-gray-400 hover:text-white">
                   Carrier Partners
                 </Link>
               </li>
               <li>
-                <Link href="/faq" className="relative inline-block text-gray-300 hover:text-white transition-colors duration-200
-                  after:absolute after:bottom-0 after:left-0 after:w-0 after:h-px after:bg-accent-400
-                  after:transition-all after:duration-300 hover:after:w-full">
+                <Link href="/faq" className="text-gray-400 hover:text-white">
                   FAQ
                 </Link>
               </li>
               <li>
-                <Link href="/resources" className="relative inline-block text-gray-300 hover:text-white transition-colors duration-200
-                  after:absolute after:bottom-0 after:left-0 after:w-0 after:h-px after:bg-accent-400
-                  after:transition-all after:duration-300 hover:after:w-full">
+                <Link href="/resources" className="text-gray-400 hover:text-white">
                   Resources
                 </Link>
               </li>
               <li>
-                <Link href="/documents" className="relative inline-block text-gray-300 hover:text-white transition-colors duration-200
-                  after:absolute after:bottom-0 after:left-0 after:w-0 after:h-px after:bg-accent-400
-                  after:transition-all after:duration-300 hover:after:w-full">
+                <Link href="/documents" className="text-gray-400 hover:text-white">
                   Upload Documents
                 </Link>
               </li>
               <li>
-                <Link href="/status" className="relative inline-block text-gray-300 hover:text-white transition-colors duration-200
-                  after:absolute after:bottom-0 after:left-0 after:w-0 after:h-px after:bg-accent-400
-                  after:transition-all after:duration-300 hover:after:w-full">
+                <Link href="/status" className="text-gray-400 hover:text-white">
                   Check Status
                 </Link>
               </li>
               <li>
-                <Link href="/apply" className="relative inline-block text-gray-300 hover:text-white transition-colors duration-200
-                  after:absolute after:bottom-0 after:left-0 after:w-0 after:h-px after:bg-accent-400
-                  after:transition-all after:duration-300 hover:after:w-full">
+                <Link href="/apply" className="text-gray-400 hover:text-white">
                   Apply Now
                 </Link>
               </li>
@@ -76,38 +62,33 @@ export function Footer() {
 
           {/* Contact */}
           <div>
-            <h3 className="font-display text-lg font-semibold mb-5 tracking-tight">Contact Us</h3>
-            <ul className="space-y-3">
+            <h3 className="font-semibold mb-4">Contact Us</h3>
+            <ul className="space-y-2 text-sm">
               <li>
                 <a
                   href={`mailto:${COMPANY.supportEmail}`}
-                  className="flex items-center space-x-2 text-gray-300 hover:text-white transition-colors"
+                  className="flex items-center space-x-2 text-gray-400 hover:text-white"
                 >
                   <Mail className="h-4 w-4" />
                   <span>{COMPANY.supportEmail}</span>
                 </a>
               </li>
-              <li className="flex items-start space-x-2 text-gray-300">
-                <MapPin className="h-4 w-4 mt-1 flex-shrink-0" />
+              <li className="flex items-start space-x-2 text-gray-400">
+                <MapPin className="h-4 w-4 mt-0.5 flex-shrink-0" />
                 <span>{COMPANY.location}</span>
               </li>
             </ul>
 
-            {/* Legal Links */}
-            <div className="mt-6 pt-4 border-t border-primary-700">
-              <ul className="space-y-2 text-sm">
-                <li>
-                  <Link href="/privacy" className="text-gray-400 hover:text-white transition-colors">
-                    Privacy Policy
-                  </Link>
-                </li>
-              </ul>
+            <div className="mt-4 pt-4 border-t border-primary-700">
+              <Link href="/privacy" className="text-xs text-gray-500 hover:text-white">
+                Privacy Policy
+              </Link>
             </div>
           </div>
         </div>
 
-        <div className="border-t border-primary-800 mt-12 pt-8 text-center text-gray-500">
-          <p className="text-sm">&copy; {new Date().getFullYear()} {COMPANY.name}. All rights reserved.</p>
+        <div className="border-t border-primary-800 mt-8 pt-6 text-center">
+          <p className="text-xs text-gray-500">&copy; {new Date().getFullYear()} {COMPANY.name}. All rights reserved.</p>
         </div>
       </div>
     </footer>

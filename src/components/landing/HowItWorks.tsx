@@ -54,14 +54,14 @@ export function HowItWorks() {
   }, [])
 
   return (
-    <section ref={sectionRef} className="py-20 lg:py-24 bg-white">
+    <section ref={sectionRef} className="py-12 lg:py-16 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section header */}
-        <div className="text-center mb-12">
-          <h2 className="font-display text-3xl md:text-4xl font-bold text-primary-800 mb-4 tracking-tight">
+        <div className="text-center mb-8">
+          <h2 className="text-2xl md:text-3xl font-bold text-primary-800 mb-3">
             How It Works
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-gray-600 max-w-2xl mx-auto">
             Getting started is easy. Follow these steps to begin your journey to truck ownership.
           </p>
         </div>
@@ -86,28 +86,18 @@ export function HowItWorks() {
               )}
 
               {/* Card */}
-              <div className="group relative bg-white rounded-2xl p-7 text-center shadow-soft border border-gray-100/50
-                transition-all duration-300 ease-out
-                hover:shadow-soft-lg hover:-translate-y-1 hover:border-primary-200/50">
-                <div className="relative inline-block mb-5">
+              <div className="relative bg-white rounded-lg p-6 text-center border border-gray-200">
+                <div className="relative inline-block mb-4">
                   {/* Icon circle */}
-                  <div className="w-16 h-16 bg-gradient-to-br from-primary-800 to-primary-700 rounded-full flex items-center justify-center mx-auto shadow-soft
-                    transition-all duration-300
-                    group-hover:from-primary-700 group-hover:to-primary-600
-                    group-hover:scale-110 group-hover:shadow-soft-lg">
-                    <step.icon className="h-8 w-8 text-white transition-transform duration-300 group-hover:scale-105" />
+                  <div className="w-14 h-14 bg-primary-800 rounded-full flex items-center justify-center mx-auto">
+                    <step.icon className="h-7 w-7 text-white" />
                   </div>
-                  {/* Number badge - pops in */}
-                  <span
-                    className={`absolute -top-1 -right-1 w-7 h-7 bg-accent-500 text-white rounded-full flex items-center justify-center text-xs font-bold shadow-soft transition-all duration-300 ${
-                      isVisible ? 'scale-100 opacity-100' : 'scale-0 opacity-0'
-                    }`}
-                    style={{ transitionDelay: `${index * 150 + 300}ms` }}
-                  >
+                  {/* Number badge */}
+                  <span className="absolute -top-1 -right-1 w-6 h-6 bg-primary-600 text-white rounded-full flex items-center justify-center text-xs font-bold">
                     {step.number}
                   </span>
                 </div>
-                <h3 className="font-display text-lg font-bold text-primary-800 mb-2">
+                <h3 className="text-lg font-bold text-primary-800 mb-2">
                   {step.title}
                 </h3>
                 <p className="text-sm text-gray-600 leading-relaxed">
