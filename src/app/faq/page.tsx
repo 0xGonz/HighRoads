@@ -4,10 +4,11 @@ import { ArrowRight, Mail } from 'lucide-react'
 import { FAQ } from '@/components/landing/FAQ'
 import { Button } from '@/components/ui/Button'
 import { PageHero } from '@/components/layout/PageHero'
+import { COMPANY } from '@/lib/config'
 
 export const metadata: Metadata = {
-  title: 'FAQ | High Road Partners LLC',
-  description: 'Find answers to frequently asked questions about our lease-to-own trucking program, requirements, payments, and more.',
+  title: 'FAQ | High Road Capital LLC',
+  description: 'Find answers to frequently asked questions about our performance-based truck ownership program, requirements, profit split, and more.',
 }
 
 export default function FAQPage() {
@@ -15,7 +16,7 @@ export default function FAQPage() {
     <div>
       <PageHero
         title="Frequently Asked Questions"
-        subtitle="Find answers to common questions about our lease-to-own program."
+        subtitle="Find answers to common questions about our performance-based ownership program."
       />
 
       {/* FAQ Component */}
@@ -23,19 +24,21 @@ export default function FAQPage() {
 
       {/* Contact Section */}
       <section className="py-20 bg-white">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-2xl font-bold text-primary-700 mb-4">
             Still Have Questions?
           </h2>
           <p className="text-gray-600 mb-8">
             Our team is here to help. Reach out and we&apos;ll get back to you within 24 hours.
           </p>
-          <a href="mailto:contact@highroadtech.com">
+          <a href={`mailto:${COMPANY.supportEmail}`}>
             <Button variant="outline" size="lg">
               <Mail className="mr-2 h-5 w-5" />
               Email Us
             </Button>
           </a>
+          </div>
         </div>
       </section>
 

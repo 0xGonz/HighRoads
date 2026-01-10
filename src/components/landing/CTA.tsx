@@ -1,48 +1,84 @@
 import Link from 'next/link'
-import { ArrowRight, Clock, Shield } from 'lucide-react'
+import { ArrowRight, Phone, Mail, User } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
+import { COMPANY, PROGRAM } from '@/lib/config'
 
 export function CTA() {
   return (
-    <section className="py-24 lg:py-28 bg-white">
+    <section className="py-20 lg:py-28 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-gradient-to-br from-primary-800 via-primary-700 to-primary-600 rounded-2xl p-8 md:p-14 text-center text-white shadow-soft-xl">
-          {/* Trust badges */}
-          <div className="flex items-center justify-center gap-8 mb-8 text-gray-200">
-            <span className="flex items-center text-sm font-medium">
-              <Clock className="h-4 w-4 mr-2" />
-              5-Minute Application
-            </span>
-            <span className="flex items-center text-sm font-medium">
-              <Shield className="h-4 w-4 mr-2" />
-              No Credit Check
-            </span>
+        <div className="relative bg-gradient-to-br from-primary-800 via-primary-800 to-primary-900 rounded-3xl p-10 md:p-12 text-white shadow-soft-xl overflow-hidden">
+
+          <div className="relative">
+            <div className="grid md:grid-cols-2 gap-8 items-center">
+              {/* Left side - CTA */}
+              <div className="text-center md:text-left">
+                <h2 className="font-display text-3xl md:text-4xl font-bold mb-4 tracking-tight">
+                  Ready to Earn Your Truck?
+                </h2>
+                <p className="text-lg text-gray-300 mb-6">
+                  Check your eligibility today. No credit check required. We&apos;ll review your application and get back to you within 24 hours.
+                </p>
+
+                <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
+                  <Link href="/apply">
+                    <Button size="lg" className="w-full sm:w-auto px-6 group">
+                      Check Eligibility
+                      <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-200 group-hover:translate-x-1" />
+                    </Button>
+                  </Link>
+                  <Link href="/how-it-works">
+                    <Button variant="outline" size="lg" className="w-full sm:w-auto px-6 border-white/20 text-white hover:bg-white/10 hover:border-white/30 hover:text-white">
+                      How It Works
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+
+              {/* Right side - Contact Info */}
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/10">
+                <h3 className="font-bold mb-4">Have Questions? Let&apos;s Talk</h3>
+
+                <div className="space-y-4">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-9 h-9 bg-white/10 rounded-lg flex items-center justify-center">
+                      <User className="h-4 w-4 text-primary-200" />
+                    </div>
+                    <div>
+                      <p className="font-semibold text-sm">{COMPANY.leader}</p>
+                      <p className="text-xs text-gray-300">{COMPANY.leaderTitle}</p>
+                    </div>
+                  </div>
+
+                  {COMPANY.phone && (
+                    <div className="flex items-center space-x-3">
+                      <div className="w-9 h-9 bg-white/10 rounded-lg flex items-center justify-center">
+                        <Phone className="h-4 w-4 text-primary-200" />
+                      </div>
+                      <div>
+                        <a href={`tel:${COMPANY.phone}`} className="font-semibold text-sm hover:text-white transition-colors">
+                          {COMPANY.phone}
+                        </a>
+                        <p className="text-xs text-gray-300">Mon-Fri, 8am-6pm ET</p>
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="flex items-center space-x-3">
+                    <div className="w-9 h-9 bg-white/10 rounded-lg flex items-center justify-center">
+                      <Mail className="h-4 w-4 text-primary-200" />
+                    </div>
+                    <div>
+                      <a href={`mailto:${COMPANY.email}`} className="font-semibold text-sm hover:text-white transition-colors">
+                        {COMPANY.email}
+                      </a>
+                      <p className="text-xs text-gray-300">We respond within 24 hours</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-
-          <h2 className="font-display tracking-heading text-3xl md:text-4xl lg:text-5xl font-bold mb-5">
-            Own Your Truck in Minutes
-          </h2>
-          <p className="text-xl text-gray-100 max-w-2xl mx-auto mb-10 leading-relaxed">
-            Take the first step toward truck ownership today. Our simple application takes just 5 minutes, and we&apos;ll respond within 24 hours.
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/apply">
-              <Button size="lg" className="text-lg group">
-                Apply in 5 Minutes
-                <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 ease-smooth group-hover:translate-x-1" />
-              </Button>
-            </Link>
-            <Link href="/how-it-works">
-              <Button variant="outline" size="lg" className="text-lg border-white text-white hover:bg-white hover:text-primary-700">
-                Learn How It Works
-              </Button>
-            </Link>
-          </div>
-
-          <p className="mt-10 text-gray-200 text-base">
-            Pre-approved in minutes. No obligations. Start your journey to ownership today.
-          </p>
         </div>
       </div>
     </section>

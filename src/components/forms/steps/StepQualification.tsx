@@ -15,11 +15,11 @@ export function StepQualification() {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold text-primary-700 mb-2">
-        Pre-Qualification
+      <h2 className="text-xl font-bold text-gray-900 mb-2">
+        Requirements Check
       </h2>
       <p className="text-gray-600 mb-6">
-        Let&apos;s make sure you meet our basic requirements.
+        Verify that you meet our program requirements.
       </p>
 
       <div className="space-y-6">

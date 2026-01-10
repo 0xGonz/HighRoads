@@ -1,13 +1,13 @@
 'use client'
 
 import { useFormContext } from 'react-hook-form'
-import { CheckCircle } from 'lucide-react'
 import {
   ApplicationFormData,
   US_STATES,
-  PAYMENT_RANGES,
+  OWNERSHIP_GOALS,
   TRUCK_PREFERENCES,
   FREIGHT_PREFERENCES,
+  LEAD_SOURCES,
 } from '@/lib/validations'
 
 function getLabelFromValue(options: { value: string; label: string }[], value: string) {
@@ -25,6 +25,9 @@ export function StepReview() {
         { label: 'Name', value: `${values.first_name} ${values.last_name}` },
         { label: 'Email', value: values.email },
         { label: 'Phone', value: values.phone },
+        { label: 'SMS Updates', value: values.sms_opt_in ? 'Yes' : 'No' },
+        ...(values.lead_source ? [{ label: 'How you found us', value: getLabelFromValue(LEAD_SOURCES, values.lead_source) }] : []),
+        ...(values.referral_code ? [{ label: 'Referral Code', value: values.referral_code }] : []),
       ],
     },
     {
@@ -40,7 +43,7 @@ export function StepReview() {
     {
       title: 'Preferences',
       items: [
-        { label: 'Weekly Budget', value: getLabelFromValue(PAYMENT_RANGES, values.weekly_payment_budget) },
+        { label: 'Ownership Goal', value: getLabelFromValue(OWNERSHIP_GOALS, values.ownership_goal) },
         { label: 'Truck Type', value: getLabelFromValue(TRUCK_PREFERENCES, values.truck_preference) },
         { label: 'Freight Type', value: getLabelFromValue(FREIGHT_PREFERENCES, values.freight_preference) },
         { label: 'Existing Carrier', value: values.has_existing_carrier ? values.carrier_name || 'Yes' : 'No - Help me find one' },
@@ -50,18 +53,17 @@ export function StepReview() {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold text-primary-700 mb-2">
-        Review Your Application
+      <h2 className="text-xl font-bold text-gray-900 mb-2">
+        Review
       </h2>
       <p className="text-gray-600 mb-6">
-        Please review your information before submitting.
+        Confirm your information before submitting.
       </p>
 
       <div className="space-y-6">
         {sections.map((section) => (
           <div key={section.title} className="bg-gray-50 rounded-lg p-4">
-            <h3 className="font-semibold text-primary-700 mb-3 flex items-center">
-              <CheckCircle className="h-5 w-5 text-green-500 mr-2" />
+            <h3 className="font-semibold text-gray-900 mb-3">
               {section.title}
             </h3>
             <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
@@ -75,7 +77,7 @@ export function StepReview() {
           </div>
         ))}
 
-        <div className="bg-accent/10 border border-accent/20 rounded-lg p-4">
+        <div className="bg-primary-50 border border-primary-100 rounded-lg p-4">
           <p className="text-sm text-primary-700">
             <strong>What happens next?</strong> After you submit, our team will review your application and contact you within 24 hours. If you&apos;re pre-approved, you&apos;ll get access to browse our truck inventory and schedule a viewing.
           </p>

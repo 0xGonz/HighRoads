@@ -20,7 +20,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
               'block text-sm font-medium mb-1 transition-colors duration-200',
               error
                 ? 'text-red-500'
-                : 'text-gray-700 group-focus-within:text-accent'
+                : 'text-gray-700 group-focus-within:text-primary-700'
             )}
           >
             {label}
@@ -38,13 +38,13 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
               'placeholder:text-gray-400',
               error
                 ? 'border-red-400 focus:border-red-500 bg-red-50/50 animate-shake'
-                : 'border-gray-200 hover:border-gray-300 focus:border-accent focus:ring-2 focus:ring-accent/10 focus:shadow-inner-soft',
+                : 'border-gray-200 hover:border-gray-300 focus:border-primary-600 focus:ring-2 focus:ring-primary-100 focus:shadow-inner-soft',
               className
             )}
             {...props}
           />
           {/* Focus glow effect */}
-          <div className="absolute inset-0 rounded-lg opacity-0 group-focus-within:opacity-100 transition-opacity duration-300 ease-smooth pointer-events-none bg-gradient-to-r from-accent/5 via-accent/3 to-transparent" />
+          <div className="absolute inset-0 rounded-lg opacity-0 group-focus-within:opacity-100 transition-opacity duration-300 ease-smooth pointer-events-none bg-gradient-to-r from-primary-50 via-primary-50/50 to-transparent" />
         </div>
         {error && (
           <p className="mt-1.5 text-sm text-red-500 flex items-center animate-fade-in">

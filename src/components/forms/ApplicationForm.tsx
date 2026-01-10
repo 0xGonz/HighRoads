@@ -4,8 +4,9 @@ import { useState, useRef } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
-import { CheckCircle, AlertCircle, XCircle, Lightbulb, Mail, Phone, RefreshCw } from 'lucide-react'
+import { CheckCircle, AlertCircle, XCircle, Info, Mail, Phone, RefreshCw } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
+import { COMPANY } from '@/lib/config'
 import { StepContact } from './steps/StepContact'
 import { StepQualification } from './steps/StepQualification'
 import { StepPreferences } from './steps/StepPreferences'
@@ -81,12 +82,15 @@ export function ApplicationForm() {
       last_name: '',
       email: '',
       phone: '',
+      sms_opt_in: false,
+      lead_source: '',
+      referral_code: '',
       has_cdl: false,
       has_medical_card: false,
       experience_months: 0,
       location_state: '',
       us_work_eligible: false,
-      weekly_payment_budget: '',
+      ownership_goal: '',
       truck_preference: '',
       freight_preference: '',
       has_existing_carrier: false,
@@ -141,7 +145,7 @@ export function ApplicationForm() {
         fieldsToValidate = ['has_cdl', 'has_medical_card', 'experience_months', 'location_state', 'us_work_eligible']
         break
       case 3:
-        fieldsToValidate = ['weekly_payment_budget', 'truck_preference', 'freight_preference', 'has_existing_carrier']
+        fieldsToValidate = ['ownership_goal', 'truck_preference', 'freight_preference', 'has_existing_carrier']
         break
     }
 
@@ -241,39 +245,36 @@ export function ApplicationForm() {
 
   const CurrentStepComponent = STEPS[currentStep - 1].component
 
-  // Show disqualification message with helpful guidance
+  // Show disqualification message
   if (disqualified && !disqualified.qualified) {
     return (
       <div className="max-w-2xl mx-auto p-8">
-        <div className="bg-amber-50 border border-amber-200 rounded-lg p-8 animate-fade-in-up">
+        <div className="bg-gray-50 border border-gray-200 rounded-lg p-8">
           <div className="text-center mb-6">
-            <Lightbulb className="h-16 w-16 text-amber-500 mx-auto mb-4 animate-scale-bounce" />
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">
-              Let&apos;s Get You Ready
+            <Info className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+            <h2 className="text-xl font-bold text-gray-900 mb-2">
+              Requirements Not Met
             </h2>
             <p className="text-gray-600">
-              You&apos;re not quite there yet, but here&apos;s what you need:
+              Based on your responses, you don&apos;t currently meet our program requirements.
             </p>
           </div>
 
-          <div className="bg-white rounded-lg p-6 mb-6">
-            <h3 className="font-semibold text-gray-900 mb-4">Requirements to meet:</h3>
+          <div className="bg-white rounded-lg p-6 mb-6 border border-gray-100">
+            <h3 className="font-semibold text-gray-900 mb-4">Missing requirements:</h3>
             <ul className="space-y-3">
               {disqualified.reasons.map((reason, index) => (
                 <li key={index} className="flex items-start">
-                  <AlertCircle className="h-5 w-5 text-amber-500 mr-3 mt-0.5 flex-shrink-0" />
+                  <AlertCircle className="h-5 w-5 text-gray-400 mr-3 mt-0.5 flex-shrink-0" />
                   <span className="text-gray-700">{reason}</span>
                 </li>
               ))}
             </ul>
           </div>
 
-          <div className="bg-primary-50 rounded-lg p-4 mb-6">
-            <p className="text-sm text-primary-800">
-              <strong>Need help?</strong> Many drivers get their CDL or medical card within weeks.
-              When your situation changes, come back and apply — we&apos;d love to help you own your truck!
-            </p>
-          </div>
+          <p className="text-sm text-gray-500 mb-6 text-center">
+            When your situation changes, you&apos;re welcome to apply again.
+          </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button variant="outline" onClick={() => setDisqualified(null)}>
@@ -293,9 +294,9 @@ export function ApplicationForm() {
       <div className="max-w-2xl mx-auto">
         {/* Error notification */}
         {submitError && (
-          <div className="mb-6 bg-red-50 border border-red-200 rounded-lg p-5 animate-fade-in-down">
+          <div className="mb-6 bg-red-50 border border-red-200 rounded-lg p-5">
             <div className="flex items-start">
-              <XCircle className="h-6 w-6 text-red-500 mr-3 mt-0.5 flex-shrink-0 animate-shake" />
+              <XCircle className="h-6 w-6 text-red-500 mr-3 mt-0.5 flex-shrink-0" />
               <div className="flex-1">
                 <p className="text-red-800 font-semibold text-lg">{submitError.title}</p>
                 <p className="text-red-600 mt-1">{submitError.message}</p>
@@ -306,19 +307,21 @@ export function ApplicationForm() {
                     <p className="text-sm text-red-700 mb-3">Contact us directly:</p>
                     <div className="flex flex-wrap gap-3">
                       <a
-                        href="mailto:contact@highroadtech.com"
+                        href={`mailto:${COMPANY.supportEmail}`}
                         className="inline-flex items-center text-sm bg-white border border-red-300 rounded-lg px-3 py-2 text-red-700 hover:bg-red-50 transition-colors"
                       >
                         <Mail className="h-4 w-4 mr-2" />
-                        contact@highroadtech.com
+                        {COMPANY.supportEmail}
                       </a>
-                      <a
-                        href="tel:+18005551234"
-                        className="inline-flex items-center text-sm bg-white border border-red-300 rounded-lg px-3 py-2 text-red-700 hover:bg-red-50 transition-colors"
-                      >
-                        <Phone className="h-4 w-4 mr-2" />
-                        (800) 555-1234
-                      </a>
+                      {COMPANY.phone && (
+                        <a
+                          href={`tel:${COMPANY.phone}`}
+                          className="inline-flex items-center text-sm bg-white border border-red-300 rounded-lg px-3 py-2 text-red-700 hover:bg-red-50 transition-colors"
+                        >
+                          <Phone className="h-4 w-4 mr-2" />
+                          {COMPANY.phone}
+                        </a>
+                      )}
                     </div>
                   </div>
                 )}
@@ -355,7 +358,7 @@ export function ApplicationForm() {
         {/* Progress Steps */}
         <div className="mb-8">
           {/* Mobile step counter */}
-          <p className="text-center text-sm text-gray-500 mb-4 sm:hidden animate-fade-in">
+          <p className="text-center text-sm text-gray-500 mb-4 sm:hidden">
             Step {currentStep} of {STEPS.length}: {STEPS[currentStep - 1].title}
           </p>
 
@@ -371,33 +374,27 @@ export function ApplicationForm() {
               <div key={step.id} className="flex items-center">
                 <div className="flex flex-col items-center">
                   <div
-                    className={`relative w-10 h-10 rounded-full flex items-center justify-center font-semibold text-sm transition-all duration-300 ${
+                    className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold text-sm transition-colors duration-200 ${
                       currentStep > step.id
-                        ? 'bg-green-500 text-white shadow-md shadow-green-500/30 scale-100'
+                        ? 'bg-primary-700 text-white'
                         : currentStep === step.id
-                        ? 'bg-accent text-white shadow-lg shadow-accent/30 scale-110'
-                        : 'bg-gray-200 text-gray-500 scale-100'
+                        ? 'bg-primary-600 text-white'
+                        : 'bg-gray-200 text-gray-500'
                     }`}
                     aria-current={currentStep === step.id ? 'step' : undefined}
                   >
-                    {/* Pulse ring for current step */}
-                    {currentStep === step.id && (
-                      <span className="absolute inset-0 rounded-full bg-accent/30 animate-pulse-ring" />
-                    )}
                     {currentStep > step.id ? (
-                      <CheckCircle className="h-5 w-5 animate-scale-bounce" />
+                      <CheckCircle className="h-5 w-5" />
                     ) : (
-                      <span className={currentStep === step.id ? 'animate-fade-in' : ''}>
-                        {step.id}
-                      </span>
+                      <span>{step.id}</span>
                     )}
                   </div>
                   <span
-                    className={`mt-2 text-xs hidden sm:block transition-all duration-300 ${
+                    className={`mt-2 text-xs hidden sm:block ${
                       currentStep > step.id
-                        ? 'text-green-600 font-medium'
+                        ? 'text-primary-700 font-medium'
                         : currentStep === step.id
-                        ? 'text-accent font-semibold'
+                        ? 'text-primary-600 font-semibold'
                         : 'text-gray-400'
                     }`}
                   >
@@ -406,12 +403,11 @@ export function ApplicationForm() {
                 </div>
                 {index < STEPS.length - 1 && (
                   <div
-                    className="relative w-full h-1 mx-2 bg-gray-200 rounded-full overflow-hidden"
+                    className="w-full h-1 mx-2 bg-gray-200 rounded-full overflow-hidden"
                     style={{ minWidth: '40px' }}
                   >
-                    {/* Animated progress fill */}
                     <div
-                      className={`absolute inset-y-0 left-0 bg-gradient-to-r from-green-400 to-green-500 rounded-full transition-all duration-500 ease-out ${
+                      className={`h-full bg-primary-700 rounded-full transition-all duration-300 ${
                         currentStep > step.id ? 'w-full' : 'w-0'
                       }`}
                     />
@@ -424,11 +420,8 @@ export function ApplicationForm() {
 
         {/* Form */}
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="bg-white rounded-xl shadow-lg p-6 sm:p-8 transition-shadow duration-300 hover:shadow-xl">
-            {/* Step content with fade animation - key forces re-render on step change */}
-            <div key={currentStep} className="animate-fade-in-up">
-              <CurrentStepComponent />
-            </div>
+          <div className="bg-white rounded-lg shadow-soft p-6 sm:p-8">
+            <CurrentStepComponent />
 
             {/* Navigation */}
             <div className="flex justify-between mt-8 pt-6 border-t">

@@ -10,6 +10,9 @@ export interface Applicant {
   last_name: string
   email: string
   phone: string
+  sms_opt_in: boolean
+  lead_source: string | null
+  referral_code: string | null
 
   // Pre-qualification
   has_cdl: boolean | null
@@ -43,6 +46,9 @@ export interface ApplicantFormData {
   last_name: string
   email: string
   phone: string
+  sms_opt_in: boolean
+  lead_source?: string
+  referral_code?: string
 
   // Step 2: Pre-qualification
   has_cdl: boolean

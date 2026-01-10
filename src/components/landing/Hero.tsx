@@ -1,80 +1,99 @@
-import Link from 'next/link'
-import { ArrowRight, CheckCircle, Users } from 'lucide-react'
-import { Button } from '@/components/ui/Button'
+'use client'
 
-const benefits = [
-  'Flexible weekly payments that fit your budget',
-  'No credit check required',
-  'Full support, training, and mentorship',
-  'Build equity with every mile you drive',
-]
+import Link from 'next/link'
+import Image from 'next/image'
+import { ArrowRight, CheckCircle } from 'lucide-react'
+import { Button } from '@/components/ui/Button'
+import { useEffect, useState } from 'react'
+import { COMPANY, BENEFITS } from '@/lib/config'
 
 export function Hero() {
+  const [isLoaded, setIsLoaded] = useState(false)
+
+  useEffect(() => {
+    setIsLoaded(true)
+  }, [])
+
   return (
-    <section className="relative bg-primary-700 text-white overflow-hidden">
-      {/* Background pattern - subtle texture */}
-      <div className="absolute inset-0 opacity-10">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-          }}
+    <section className="relative min-h-[600px] lg:min-h-[700px] text-white overflow-hidden">
+      {/* Background Image */}
+      <div className="absolute inset-0">
+        <Image
+          src="/images/hero-truck.jpg"
+          alt="Professional truck driver with semi truck"
+          fill
+          priority
+          className="object-cover object-center"
         />
+        {/* Dark overlay for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-r from-primary-900/95 via-primary-900/80 to-primary-900/40" />
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
-        <div className="max-w-3xl">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28 lg:py-32 w-full">
+        <div className="max-w-2xl">
           {/* Trust Badge */}
-          <div className="inline-flex items-center bg-white/15 backdrop-blur-sm rounded-full px-5 py-2.5 mb-8 border border-white/10">
-            <Users className="h-4 w-4 text-accent mr-2.5" />
-            <span className="text-sm font-semibold tracking-wide">Trusted by 500+ Owner-Operators Nationwide</span>
+          <div
+            className={`inline-flex items-center bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 mb-6 border border-white/20 transition-all duration-500 ${
+              isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-3'
+            }`}
+          >
+            <span className="text-sm font-semibold tracking-wide">{COMPANY.shortName} | {COMPANY.location}</span>
           </div>
 
           {/* Main heading */}
-          <h1 className="font-display tracking-display text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] mb-6">
-            Own Your Own Truck.
-            <span className="text-accent block mt-1" style={{ textShadow: '0 0 40px rgba(249, 115, 22, 0.3)' }}>
-              Start for $0 Down.
-            </span>
+          <h1
+            className={`font-display text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.05] tracking-tight mb-6 transition-all duration-500 delay-100 [text-shadow:_0_4px_24px_rgba(0,0,0,0.3)] ${
+              isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+            }`}
+          >
+            <span className="block">STEER YOUR</span>
+            <span className="block text-accent-400 [text-shadow:_0_2px_20px_rgba(201,162,39,0.3)]">CAREER FORWARD</span>
           </h1>
 
           {/* Subtitle */}
-          <p className="text-xl md:text-2xl text-gray-200 mb-10 leading-relaxed">
-            Join the High Road program and build equity in your own truck while driving for top-paying carriers.
+          <p
+            className={`text-xl md:text-2xl text-gray-100 mb-8 leading-relaxed max-w-xl transition-all duration-500 delay-200 ${
+              isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+            }`}
+          >
+            Secure Your Future with {COMPANY.shortName}&apos;s Innovative Truck Ownership Program.
           </p>
 
           {/* Benefits list */}
-          <ul className="space-y-3.5 mb-12">
-            {benefits.map((benefit) => (
-              <li key={benefit} className="flex items-center space-x-3">
-                <CheckCircle className="h-6 w-6 text-accent flex-shrink-0" />
-                <span className="text-lg text-gray-100">{benefit}</span>
+          <ul className="space-y-3 mb-10">
+            {BENEFITS.ownership.map((benefit, index) => (
+              <li
+                key={benefit}
+                className={`flex items-center space-x-3 transition-all duration-400 ${
+                  isLoaded ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
+                }`}
+                style={{ transitionDelay: `${250 + index * 75}ms` }}
+              >
+                <CheckCircle className="h-5 w-5 text-accent-400 flex-shrink-0" />
+                <span className="text-gray-100 font-medium">{benefit}</span>
               </li>
             ))}
           </ul>
 
           {/* CTA buttons */}
-          <div className="flex flex-col sm:flex-row gap-4">
+          <div
+            className={`flex flex-col sm:flex-row gap-4 transition-all duration-500 delay-500 ${
+              isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+            }`}
+          >
             <Link href="/apply">
               <Button size="lg" className="w-full sm:w-auto text-lg px-8 group">
-                Apply in 5 Minutes
-                <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 ease-smooth group-hover:translate-x-1" />
+                Get Started Today
+                <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-200 group-hover:translate-x-1" />
               </Button>
             </Link>
             <Link href="/how-it-works">
-              <Button variant="secondary" size="lg" className="w-full sm:w-auto text-lg px-8">
-                Learn How It Works
+              <Button variant="outline" size="lg" className="w-full sm:w-auto text-lg px-8 border-2 border-white/40 text-white backdrop-blur-sm hover:bg-white/10 hover:border-white/60 hover:text-white">
+                How It Works
               </Button>
             </Link>
           </div>
         </div>
-      </div>
-
-      {/* Decorative truck silhouette - static, no animation */}
-      <div className="absolute right-0 bottom-0 w-1/2 h-full hidden lg:block">
-        <svg viewBox="0 0 640 512" fill="currentColor" className="absolute bottom-0 right-0 w-full h-auto opacity-5">
-          <path d="M624 352h-16V243.9c0-12.7-5.1-24.9-14.1-33.9L494 110.1c-9-9-21.2-14.1-33.9-14.1H416V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48v320c0 26.5 21.5 48 48 48h16c0 53 43 96 96 96s96-43 96-96h128c0 53 43 96 96 96s96-43 96-96h48c8.8 0 16-7.2 16-16v-32c0-8.8-7.2-16-16-16zM160 464c-26.5 0-48-21.5-48-48s21.5-48 48-48 48 21.5 48 48-21.5 48-48 48zm320 0c-26.5 0-48-21.5-48-48s21.5-48 48-48 48 21.5 48 48-21.5 48-48 48zm80-208H416V144h44.1l99.9 99.9V256z"/>
-        </svg>
       </div>
     </section>
   )

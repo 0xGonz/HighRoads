@@ -5,27 +5,35 @@ interface SemiTruckIconProps {
 export function SemiTruckIcon({ className = 'h-6 w-6' }: SemiTruckIconProps) {
   return (
     <svg
-      viewBox="0 0 24 24"
+      viewBox="0 0 64 36"
       fill="none"
       stroke="currentColor"
-      strokeWidth="1.5"
+      strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
       className={className}
     >
-      {/* Trailer */}
-      <rect x="1" y="6" width="12" height="10" rx="1" />
-      {/* Cab */}
-      <path d="M13 10h5l3 4v2h-8v-6z" />
-      {/* Cab window */}
-      <path d="M14 10v4h3.5" />
-      {/* Wheels */}
-      <circle cx="5" cy="18" r="2" />
-      <circle cx="18.5" cy="18" r="2" />
-      {/* Trailer wheel */}
-      <circle cx="10" cy="18" r="2" />
-      {/* Connection */}
-      <line x1="13" y1="14" x2="13" y2="16" />
+      {/* Trailer - large rectangle */}
+      <rect x="1" y="4" width="36" height="20" rx="1" />
+
+      {/* Cab - connected to trailer */}
+      <path d="M37 10 L37 24 L54 24 L54 16 L48 10 L37 10" />
+
+      {/* Windshield diagonal line */}
+      <line x1="48" y1="10" x2="54" y2="16" />
+
+      {/* Trailer wheel 1 */}
+      <circle cx="10" cy="28" r="4" />
+      {/* Trailer wheel 2 */}
+      <circle cx="22" cy="28" r="4" />
+
+      {/* Cab wheel */}
+      <circle cx="46" cy="28" r="4" />
+
+      {/* Undercarriage lines */}
+      <line x1="6" y1="24" x2="14" y2="24" />
+      <line x1="18" y1="24" x2="26" y2="24" />
+      <line x1="37" y1="24" x2="42" y2="24" />
     </svg>
   )
 }

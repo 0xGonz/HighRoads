@@ -9,6 +9,9 @@ export const contactSchema = z.object({
   last_name: z.string().min(2, 'Last name must be at least 2 characters'),
   email: z.string().email('Please enter a valid email address'),
   phone: z.string().regex(phoneRegex, 'Please enter a valid phone number'),
+  sms_opt_in: z.boolean(),
+  lead_source: z.string().optional(),
+  referral_code: z.string().optional(),
 })
 
 // Step 2: Pre-Qualification
@@ -22,7 +25,7 @@ export const qualificationSchema = z.object({
 
 // Step 3: Preferences
 export const preferencesSchema = z.object({
-  weekly_payment_budget: z.string().min(1, 'Please select a payment range'),
+  ownership_goal: z.string().min(1, 'Please select your ownership goal'),
   truck_preference: z.string().min(1, 'Please select a truck preference'),
   freight_preference: z.string().min(1, 'Please select a freight preference'),
   has_existing_carrier: z.boolean(),
@@ -119,12 +122,13 @@ export const US_STATES = [
   { value: 'WY', label: 'Wyoming' },
 ]
 
-export const PAYMENT_RANGES = [
-  { value: '400-500', label: '$400 - $500 per week' },
-  { value: '500-600', label: '$500 - $600 per week' },
-  { value: '600-700', label: '$600 - $700 per week' },
-  { value: '700-800', label: '$700 - $800 per week' },
-  { value: '800+', label: '$800+ per week' },
+// Ownership goals based on HRC weekly contribution levels
+export const OWNERSHIP_GOALS = [
+  { value: '1000', label: 'Own in ~3 years ($1,000/week to HRC)' },
+  { value: '1250', label: 'Own in ~2.5 years ($1,250/week to HRC)' },
+  { value: '1500', label: 'Own in ~2 years ($1,500/week to HRC)' },
+  { value: '1750', label: 'Own in ~1.5 years ($1,750/week to HRC)' },
+  { value: '2000', label: 'Own in ~1 year ($2,000/week to HRC)' },
 ]
 
 export const TRUCK_PREFERENCES = [
@@ -139,4 +143,14 @@ export const FREIGHT_PREFERENCES = [
   { value: 'reefer', label: 'Refrigerated' },
   { value: 'tanker', label: 'Tanker' },
   { value: 'no-preference', label: 'No Preference' },
+]
+
+export const LEAD_SOURCES = [
+  { value: 'google', label: 'Google Search' },
+  { value: 'facebook', label: 'Facebook' },
+  { value: 'friend', label: 'Friend / Family Referral' },
+  { value: 'driver', label: 'Current Driver Referral' },
+  { value: 'forum', label: 'Trucking Forum' },
+  { value: 'job-board', label: 'Job Board' },
+  { value: 'other', label: 'Other' },
 ]

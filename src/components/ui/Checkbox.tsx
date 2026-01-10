@@ -19,12 +19,12 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
             id={checkboxId}
             type="checkbox"
             className={cn(
-              'peer h-6 w-6 cursor-pointer appearance-none rounded-md border-2',
+              'peer h-6 w-6 cursor-pointer appearance-none rounded-lg border-2',
               'transition-all duration-200 ease-out',
-              'focus:outline-none focus:ring-2 focus:ring-accent/30 focus:ring-offset-2',
-              'checked:bg-accent checked:border-accent checked:shadow-md checked:shadow-accent/20',
+              'focus:outline-none focus:ring-2 focus:ring-primary-200 focus:ring-offset-2',
+              'checked:bg-primary-700 checked:border-primary-700 checked:shadow-md checked:shadow-primary-700/20',
               'hover:scale-105 active:scale-95',
-              error ? 'border-red-500' : 'border-gray-300 hover:border-accent/50',
+              error ? 'border-red-500' : 'border-gray-300 hover:border-primary-400',
               className
             )}
             {...props}
@@ -39,7 +39,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
             strokeWidth={3}
           />
           {/* Ripple effect on check */}
-          <span className="absolute inset-0 rounded-md bg-accent/20 scale-0 peer-checked:scale-150 opacity-0 peer-checked:opacity-0 transition-all duration-300 pointer-events-none" />
+          <span className="absolute inset-0 rounded-md bg-primary-200 scale-0 peer-checked:scale-150 opacity-0 peer-checked:opacity-0 transition-all duration-300 pointer-events-none" />
         </div>
         <label
           htmlFor={checkboxId}

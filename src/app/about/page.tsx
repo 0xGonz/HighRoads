@@ -5,8 +5,8 @@ import { Button } from '@/components/ui/Button'
 import { PageHero } from '@/components/layout/PageHero'
 
 export const metadata: Metadata = {
-  title: 'About Us | High Road Partners LLC',
-  description: 'Learn about High Road Partners LLC and our mission to help drivers own their own trucks through our innovative lease-to-own program.',
+  title: 'About Us | High Road Capital LLC',
+  description: 'Learn about High Road Capital LLC and our mission to help drivers own their own trucks through our innovative lease-to-own program.',
 }
 
 const values = [
@@ -36,7 +36,7 @@ export default function AboutPage() {
   return (
     <div>
       <PageHero
-        title="About High Road Partners"
+        title="About High Road Capital"
         subtitle="We started High Road with a simple belief: every hardworking driver deserves the opportunity to own their own truck, regardless of their credit history or available cash."
       />
 
@@ -47,7 +47,7 @@ export default function AboutPage() {
             <h2 className="text-3xl font-bold text-primary-700 mb-6">Our Story</h2>
             <div className="prose prose-lg text-gray-600">
               <p className="mb-4">
-                High Road Partners LLC was founded by people who understand the trucking industry from the inside out. We&apos;ve seen firsthand how traditional financing fails hardworking drivers—requiring perfect credit, large down payments, and putting ownership out of reach.
+                High Road Capital LLC was founded by people who understand the trucking industry from the inside out. We&apos;ve seen firsthand how traditional financing fails hardworking drivers—requiring perfect credit, large down payments, and putting ownership out of reach.
               </p>
               <p className="mb-4">
                 We knew there had to be a better way. A way that recognized a driver&apos;s commitment and work ethic, not just their credit score. A way that turned weekly payments into real equity, not just rent.

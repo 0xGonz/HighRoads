@@ -76,7 +76,7 @@ export async function POST(request: NextRequest) {
       location_state: data.location_state,
       us_work_eligible: data.us_work_eligible,
       is_prequalified: prequalResult.qualified,
-      weekly_payment_budget: data.weekly_payment_budget,
+      ownership_goal: data.ownership_goal,
       truck_preference: data.truck_preference,
       freight_preference: data.freight_preference,
       has_existing_carrier: data.has_existing_carrier,

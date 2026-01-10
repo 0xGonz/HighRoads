@@ -6,7 +6,7 @@ import { Select } from '@/components/ui/Select'
 import { RadioGroup } from '@/components/ui/RadioGroup'
 import {
   ApplicationFormData,
-  PAYMENT_RANGES,
+  OWNERSHIP_GOALS,
   TRUCK_PREFERENCES,
   FREIGHT_PREFERENCES,
 } from '@/lib/validations'
@@ -23,20 +23,20 @@ export function StepPreferences() {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold text-primary-700 mb-2">
-        Your Preferences
+      <h2 className="text-xl font-bold text-gray-900 mb-2">
+        Preferences
       </h2>
       <p className="text-gray-600 mb-6">
-        Help us find the best match for you.
+        Tell us about your ownership goals and preferences. With our 50/50 profit split, higher weekly earnings to HRC mean faster ownership.
       </p>
 
       <div className="space-y-6">
         <Select
-          label="Weekly Payment Budget"
-          options={PAYMENT_RANGES}
-          placeholder="Select a payment range"
-          error={errors.weekly_payment_budget?.message}
-          {...register('weekly_payment_budget')}
+          label="Ownership Goal"
+          options={OWNERSHIP_GOALS}
+          placeholder="Select your target timeline"
+          error={errors.ownership_goal?.message}
+          {...register('ownership_goal')}
         />
 
         <Select

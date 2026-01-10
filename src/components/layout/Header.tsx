@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react'
 import { Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { SemiTruckIcon } from '@/components/ui/SemiTruckIcon'
+import { COMPANY } from '@/lib/config'
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -23,8 +24,9 @@ export function Header() {
   const navigation = [
     { name: 'Home', href: '/' },
     { name: 'How It Works', href: '/how-it-works' },
-    { name: 'About', href: '/about' },
-    { name: 'FAQ', href: '/faq' },
+    { name: 'Calculator', href: '/calculator' },
+    { name: 'Resources', href: '/resources' },
+    { name: 'Check Status', href: '/status' },
   ]
 
   const isActive = (href: string) => {
@@ -36,18 +38,17 @@ export function Header() {
 
   return (
     <header
-      className={`text-white sticky top-0 z-50 transition-all duration-300 ease-smooth ${
+      className={`text-white sticky top-0 z-50 transition-all duration-200 ${
         isScrolled
-          ? 'bg-primary-700/95 backdrop-blur-md shadow-soft-lg'
-          : 'bg-primary-700'
+          ? 'bg-primary-900 shadow-soft-lg'
+          : 'bg-primary-800'
       }`}
     >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <Link href="/" className="flex items-center space-x-2.5 group">
-              <SemiTruckIcon className="h-8 w-8 text-accent transition-transform duration-300 ease-smooth group-hover:scale-105" />
-              <span className="text-xl font-bold transition-colors duration-200 group-hover:text-gray-100">High Road</span>
+            <Link href="/" className="flex items-center group">
+              <span className="font-display text-xl font-bold tracking-tight transition-colors duration-200 group-hover:text-accent-400">{COMPANY.shortName}</span>
             </Link>
           </div>
 
@@ -57,11 +58,14 @@ export function Header() {
               <Link
                 key={item.name}
                 href={item.href}
-                className={`transition-colors pb-1 ${
+                className={`relative py-1 transition-colors duration-200 ${
                   isActive(item.href)
-                    ? 'text-white border-b-2 border-accent'
-                    : 'text-gray-200 hover:text-white border-b-2 border-transparent'
-                }`}
+                    ? 'text-white'
+                    : 'text-gray-200 hover:text-white'
+                }
+                after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-accent-400
+                after:transition-all after:duration-300
+                ${isActive(item.href) ? 'after:w-full' : 'after:w-0 hover:after:w-full'}`}
               >
                 {item.name}
               </Link>
@@ -92,33 +96,21 @@ export function Header() {
             isMenuOpen ? 'max-h-80 pb-4 opacity-100' : 'max-h-0 opacity-0'
           }`}
         >
-          {navigation.map((item, index) => (
+          {navigation.map((item) => (
             <Link
               key={item.name}
               href={item.href}
-              className={`block py-2 transition-all duration-200 ${
+              className={`block py-2 ${
                 isActive(item.href)
                   ? 'text-white font-semibold'
-                  : 'text-gray-200 hover:text-white hover:translate-x-1'
+                  : 'text-gray-200 hover:text-white'
               }`}
-              style={{
-                transitionDelay: isMenuOpen ? `${index * 50}ms` : '0ms',
-                opacity: isMenuOpen ? 1 : 0,
-                transform: isMenuOpen ? 'translateX(0)' : 'translateX(-8px)',
-              }}
               onClick={() => setIsMenuOpen(false)}
             >
               {item.name}
             </Link>
           ))}
-          <div
-            className="mt-4 transition-all duration-200"
-            style={{
-              transitionDelay: isMenuOpen ? `${navigation.length * 50}ms` : '0ms',
-              opacity: isMenuOpen ? 1 : 0,
-              transform: isMenuOpen ? 'translateX(0)' : 'translateX(-8px)',
-            }}
-          >
+          <div className="mt-4">
             <Link href="/apply" onClick={() => setIsMenuOpen(false)}>
               <Button className="w-full">Apply Now</Button>
             </Link>

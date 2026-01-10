@@ -4,11 +4,19 @@ import { useState, useRef, useCallback } from 'react'
 import { ChatButton } from './ChatButton'
 import { ChatPanel } from './ChatPanel'
 
+export interface MessageAction {
+  label: string
+  href: string
+  icon: 'apply' | 'info' | 'phone' | 'question'
+}
+
 export interface Message {
   id: string
   role: 'user' | 'assistant'
   content: string
   timestamp: Date
+  actions?: MessageAction[]
+  image?: string // base64 image data
 }
 
 // Define Vapi type for dynamic import
@@ -161,9 +169,9 @@ export function ChatWidget() {
     setIsOpen(false)
   }, [])
 
-  const handleSendMessage = useCallback((text: string) => {
+  const handleSendMessage = useCallback((text: string, image?: string) => {
     // Add user message
-    addMessage({ role: 'user', content: text })
+    addMessage({ role: 'user', content: text, image })
 
     // If Vapi is connected, send through voice
     if (vapiRef.current && isConnected) {
@@ -171,15 +179,73 @@ export function ChatWidget() {
       return
     }
 
-    // Otherwise, show a helpful response (since we don't have a text-only API)
+    // Simple keyword-based responses for text chat
     setTimeout(() => {
-      const responses = [
-        "Thanks for your message! For the best experience, click the microphone button to talk with me directly. I can answer all your questions about our lease-to-own trucking program.",
-        "I'd love to help you! Click the mic button to start a voice conversation - it's the fastest way to get your questions answered about truck ownership.",
-        "Great question! I work best over voice. Tap the microphone to chat with me about CDL requirements, weekly payments, and how to get started.",
-      ]
-      const randomResponse = responses[Math.floor(Math.random() * responses.length)]
-      addMessage({ role: 'assistant', content: randomResponse })
+      const lowerText = text.toLowerCase()
+      let response = ""
+      let actions: MessageAction[] = []
+
+      // Handle image uploads
+      if (image) {
+        response = "Thanks for sharing that screenshot! I can see you're looking for help. If you're stuck on the application or have questions about a specific step, let me know! Otherwise, here are some helpful links:"
+        actions = [
+          { label: "Start Application", href: "/apply", icon: "apply" },
+          { label: "How It Works", href: "/how-it-works", icon: "info" },
+          { label: "FAQ", href: "/faq", icon: "question" }
+        ]
+      } else if (lowerText.includes("get started") || lowerText.includes("how do i") || lowerText.includes("apply") || lowerText.includes("start")) {
+        response = "Getting started is easy! The application takes about 5 minutes and there's no credit check required. You'll need a valid CDL-A, current DOT medical card, and at least 12 months of driving experience."
+        actions = [
+          { label: "Apply Now", href: "/apply", icon: "apply" },
+          { label: "See Requirements", href: "/how-it-works", icon: "info" }
+        ]
+      } else if (lowerText.includes("requirement") || lowerText.includes("qualify") || lowerText.includes("need") || lowerText.includes("cdl")) {
+        response = "To qualify you'll need: valid Class A CDL, current DOT medical card, 12+ months OTR experience, clean MVR (no DUI/DWI in past 5 years), and US work eligibility. No credit check required!"
+        actions = [
+          { label: "Check If You Qualify", href: "/apply", icon: "apply" },
+          { label: "Learn More", href: "/how-it-works", icon: "info" }
+        ]
+      } else if (lowerText.includes("payment") || lowerText.includes("cost") || lowerText.includes("price") || lowerText.includes("down") || lowerText.includes("money") || lowerText.includes("split") || lowerText.includes("profit")) {
+        response = "No down payment required! After a 4-week Proving Ground, net revenue is split 50/50 between you and High Road Capital. Your share builds equity toward ownership. At $2,000/week to HRC, you can own in just 1 year!"
+        actions = [
+          { label: "Apply Now", href: "/apply", icon: "apply" },
+          { label: "How It Works", href: "/how-it-works", icon: "info" }
+        ]
+      } else if (lowerText.includes("truck") || lowerText.includes("vehicle") || lowerText.includes("equipment")) {
+        response = "We offer 2020-2021 Peterbilt 579 sleeper trucks, serviced by our partner TLG Peterbilt of Charleston. All trucks are inspected and fully maintained. Once approved, we'll help you select your truck!"
+        actions = [
+          { label: "Start Application", href: "/apply", icon: "apply" },
+          { label: "View Program Details", href: "/how-it-works", icon: "info" }
+        ]
+      } else if (lowerText.includes("carrier") || lowerText.includes("freight") || lowerText.includes("load") || lowerText.includes("haul")) {
+        response = "We partner with top-paying carriers for consistent freight. Choose from dry van, refrigerated, or flatbed. Our carriers offer competitive rates and consistent miles."
+        actions = [
+          { label: "Get Started", href: "/apply", icon: "apply" },
+          { label: "About Us", href: "/about", icon: "info" }
+        ]
+      } else if (lowerText.includes("hello") || lowerText.includes("hi") || lowerText.includes("hey")) {
+        response = "Hello! Welcome to High Road Capital. I'm here to help you learn about our performance-based truck ownership program. What would you like to know?"
+        actions = [
+          { label: "Apply Now", href: "/apply", icon: "apply" },
+          { label: "How It Works", href: "/how-it-works", icon: "info" },
+          { label: "FAQ", href: "/faq", icon: "question" }
+        ]
+      } else if (lowerText.includes("own") || lowerText.includes("ownership") || lowerText.includes("how long") || lowerText.includes("timeline")) {
+        response = "Ownership timeline depends on performance. At $1,000/week to HRC = 3 years. At $1,500/week = 2 years. At $2,000/week = just 1 year. The better you perform, the faster you own!"
+        actions = [
+          { label: "Apply Now", href: "/apply", icon: "apply" },
+          { label: "Ownership Details", href: "/how-it-works", icon: "info" }
+        ]
+      } else {
+        response = "Thanks for your question! Our performance-based ownership program helps drivers earn their truck through a 50/50 profit split. No credit check, no down payment. How can I help you?"
+        actions = [
+          { label: "Apply Now", href: "/apply", icon: "apply" },
+          { label: "How It Works", href: "/how-it-works", icon: "info" },
+          { label: "FAQ", href: "/faq", icon: "question" }
+        ]
+      }
+
+      addMessage({ role: 'assistant', content: response, actions })
     }, 500)
   }, [addMessage, isConnected])
 

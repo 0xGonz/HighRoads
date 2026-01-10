@@ -27,7 +27,7 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
               'block text-sm font-medium mb-1 transition-colors duration-200',
               error
                 ? 'text-red-500'
-                : 'text-gray-700 group-focus-within:text-accent'
+                : 'text-gray-700 group-focus-within:text-primary-700'
             )}
           >
             {label}
@@ -43,11 +43,11 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
               'focus:outline-none',
               error
                 ? 'border-red-400 focus:border-red-500 bg-red-50/50'
-                : 'border-gray-200 hover:border-gray-300 focus:border-accent focus:ring-2 focus:ring-accent/10 focus:shadow-inner-soft',
+                : 'border-gray-200 hover:border-gray-300 focus:border-primary-600 focus:ring-2 focus:ring-primary-100 focus:shadow-inner-soft',
               className
             )}
             style={{
-              backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23f97316' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M6 8l4 4 4-4'/%3e%3c/svg%3e")`,
+              backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%230f2d4a' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M6 8l4 4 4-4'/%3e%3c/svg%3e")`,
               backgroundPosition: 'right 0.75rem center',
               backgroundRepeat: 'no-repeat',
               backgroundSize: '1.5em 1.5em',
@@ -67,7 +67,7 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
             ))}
           </select>
           {/* Focus glow effect */}
-          <div className="absolute inset-0 rounded-lg opacity-0 group-focus-within:opacity-100 transition-opacity duration-300 ease-smooth pointer-events-none bg-gradient-to-r from-accent/5 via-accent/3 to-transparent" />
+          <div className="absolute inset-0 rounded-lg opacity-0 group-focus-within:opacity-100 transition-opacity duration-300 ease-smooth pointer-events-none bg-gradient-to-r from-primary-50 via-primary-50/50 to-transparent" />
         </div>
         {error && (
           <p className="mt-1.5 text-sm text-red-500 flex items-center animate-fade-in">

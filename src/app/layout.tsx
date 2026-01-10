@@ -1,9 +1,10 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Inter, Plus_Jakarta_Sans } from 'next/font/google'
 import dynamic from 'next/dynamic'
 import './globals.css'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
+import { BackToTop } from '@/components/ui/BackToTop'
 
 // Dynamically import ChatWidget to avoid SSR issues with Vapi SDK
 const ChatWidget = dynamic(() => import('@/components/widget/ChatWidget').then(mod => mod.ChatWidget), {
@@ -15,14 +16,15 @@ const inter = Inter({
   variable: '--font-inter',
 })
 
-const interTight = Inter({
+// Premium geometric display font for headlines
+const plusJakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
   weight: ['600', '700', '800'],
-  variable: '--font-inter-tight',
+  variable: '--font-display',
 })
 
 export const metadata: Metadata = {
-  title: 'High Road Partners LLC | Lease-to-Own Trucking',
+  title: 'High Road Capital LLC | Lease-to-Own Trucking',
   description: 'Own your own truck with flexible weekly payments. Drive for top-paying carriers with full support, training, and mentorship. No credit check required.',
   keywords: 'lease to own truck, trucking, CDL, owner operator, trucking business',
 }
@@ -34,13 +36,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${interTight.variable} font-sans`}>
+      <body className={`${inter.variable} ${plusJakarta.variable} font-sans antialiased`}>
         <Header />
         <main className="min-h-screen">
           {children}
         </main>
         <Footer />
         <ChatWidget />
+        <BackToTop />
       </body>
     </html>
   )

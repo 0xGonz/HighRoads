@@ -1,22 +1,28 @@
 'use client'
 
-import { useFormContext } from 'react-hook-form'
+import { useFormContext, useWatch } from 'react-hook-form'
 import { Input } from '@/components/ui/Input'
-import { ApplicationFormData } from '@/lib/validations'
+import { Checkbox } from '@/components/ui/Checkbox'
+import { Select } from '@/components/ui/Select'
+import { ApplicationFormData, LEAD_SOURCES } from '@/lib/validations'
 
 export function StepContact() {
   const {
     register,
+    control,
     formState: { errors },
   } = useFormContext<ApplicationFormData>()
 
+  const leadSource = useWatch({ control, name: 'lead_source' })
+  const showReferralCode = leadSource === 'friend' || leadSource === 'driver'
+
   return (
     <div>
-      <h2 className="text-2xl font-bold text-primary-700 mb-2">
-        Let&apos;s Get Started
+      <h2 className="text-xl font-bold text-gray-900 mb-2">
+        Contact Information
       </h2>
       <p className="text-gray-600 mb-6">
-        Tell us a bit about yourself so we can get in touch.
+        We&apos;ll use this to follow up on your application.
       </p>
 
       <div className="space-y-4">
@@ -47,10 +53,39 @@ export function StepContact() {
           label="Phone Number"
           type="tel"
           placeholder="(555) 123-4567"
-          helperText="We'll use this to contact you about your application"
           error={errors.phone?.message}
           {...register('phone')}
         />
+
+        {/* SMS Opt-in */}
+        <div className="pt-2 pb-1">
+          <Checkbox
+            label="I agree to receive text message updates about my application"
+            {...register('sms_opt_in')}
+          />
+          <p className="text-xs text-gray-500 ml-9 mt-1">
+            Message & data rates may apply. Reply STOP to unsubscribe.
+          </p>
+        </div>
+
+        {/* Lead Source */}
+        <Select
+          label="How did you hear about us?"
+          placeholder="Select an option"
+          options={LEAD_SOURCES}
+          error={errors.lead_source?.message}
+          {...register('lead_source')}
+        />
+
+        {/* Referral Code - shown only for referral sources */}
+        {showReferralCode && (
+          <Input
+            label="Referral Code (optional)"
+            placeholder="Enter referral code if you have one"
+            error={errors.referral_code?.message}
+            {...register('referral_code')}
+          />
+        )}
       </div>
     </div>
   )

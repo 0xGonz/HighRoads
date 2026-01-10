@@ -3,68 +3,44 @@
 import { useState } from 'react'
 import { ChevronDown } from 'lucide-react'
 import { cn } from '@/lib/utils'
-
-const faqs = [
-  {
-    question: 'What are the requirements to qualify?',
-    answer: 'To qualify for our lease-to-own program, you need: a valid CDL (Class A), a current DOT medical card, at least 12 months of verifiable driving experience, eligibility to work in the United States, and a clean driving record. No credit check is required.',
-  },
-  {
-    question: 'How much are the weekly payments?',
-    answer: 'Weekly payments vary based on the truck you choose and your payment plan. Most drivers pay between $500-$800 per week. We work with you to find a payment that fits your budget and helps you build equity quickly.',
-  },
-  {
-    question: 'Do I need to put money down?',
-    answer: 'No! Our program is designed to be accessible. You can start with $0 down. Some drivers choose to make a down payment to reduce their weekly payments, but it\'s completely optional.',
-  },
-  {
-    question: 'What carriers can I drive for?',
-    answer: 'We have partnerships with top-paying carriers across the country. During your application process, we\'ll match you with carriers that fit your preferred freight type, routes, and schedule. If you already have a carrier in mind, let us know.',
-  },
-  {
-    question: 'How long until I own the truck?',
-    answer: 'Most drivers complete their lease-to-own agreement in 3-5 years, depending on the payment plan chosen. Every payment you make builds equity toward ownership.',
-  },
-  {
-    question: 'What kind of support do you provide?',
-    answer: 'We provide comprehensive support including: 24/7 roadside assistance, business training and mentorship, help with LLC formation and tax preparation, rate negotiation guidance, and a community of fellow drivers.',
-  },
-]
+import { FAQ_ITEMS } from '@/lib/config'
 
 export function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
 
   return (
-    <section className="py-24 lg:py-28 bg-gray-50">
+    <section className="py-16 lg:py-20 bg-gray-50">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-20">
-          <h2 className="font-display tracking-heading text-3xl md:text-4xl font-bold text-primary-700 mb-5">
+        <div className="text-center mb-10">
+          <h2 className="font-display text-3xl md:text-4xl font-bold text-primary-800 mb-4 tracking-tight">
             Frequently Asked Questions
           </h2>
-          <p className="text-xl text-gray-600 leading-relaxed">
+          <p className="text-lg text-gray-600">
             Got questions? We&apos;ve got answers. If you don&apos;t see your question here, reach out to us.
           </p>
         </div>
 
         <div className="space-y-4">
-          {faqs.map((faq, index) => (
+          {FAQ_ITEMS.map((faq, index) => (
             <div
               key={index}
               className={cn(
-                'bg-white rounded-xl shadow-soft overflow-hidden border-l-4 transition-all duration-300 ease-smooth',
-                openIndex === index ? 'border-accent shadow-soft-lg' : 'border-transparent'
+                'group bg-white rounded-2xl shadow-soft overflow-hidden border-l-4 transition-all duration-300 ease-smooth',
+                openIndex === index
+                  ? 'border-accent-500 shadow-soft-lg'
+                  : 'border-transparent hover:border-primary-200/50 hover:shadow-soft-lg'
               )}
             >
               <button
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
                 className="w-full px-6 py-5 text-left flex items-center justify-between hover:bg-gray-50/50 transition-colors duration-200"
               >
-                <span className="font-semibold text-primary-700 pr-4">
+                <span className="font-display font-semibold text-primary-800 pr-4">
                   {faq.question}
                 </span>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-accent flex-shrink-0 transition-transform duration-200',
+                    'h-5 w-5 text-primary-600 flex-shrink-0 transition-transform duration-300',
                     openIndex === index && 'rotate-180'
                   )}
                 />
@@ -77,7 +53,7 @@ export function FAQ() {
               >
                 <p
                   className={cn(
-                    'px-6 pb-4 text-gray-600 leading-relaxed transition-opacity duration-200',
+                    'px-6 pb-5 text-gray-600 leading-relaxed transition-opacity duration-200',
                     openIndex === index ? 'opacity-100 delay-100' : 'opacity-0'
                   )}
                 >

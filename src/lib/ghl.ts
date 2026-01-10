@@ -282,13 +282,16 @@ interface ApplicationData {
   last_name: string
   email: string
   phone: string
+  sms_opt_in?: boolean
+  lead_source?: string
+  referral_code?: string
   has_cdl?: boolean
   has_medical_card?: boolean
   experience_months?: number
   location_state?: string
   us_work_eligible?: boolean
   is_prequalified?: boolean
-  weekly_payment_budget?: string
+  ownership_goal?: string  // Target HRC weekly contribution ($1000-$2000)
   truck_preference?: string
   freight_preference?: string
   has_existing_carrier?: boolean
@@ -334,6 +337,9 @@ export async function submitCompleteApplication(
     'new_application',
     'source_website',
     isPrequalified ? 'prequalified' : 'disqualified',
+    ...(data.sms_opt_in ? ['sms_opted_in'] : ['sms_opted_out']),
+    ...(data.lead_source ? [`lead_source_${data.lead_source}`] : []),
+    ...(data.referral_code ? ['referred'] : []),
   ]
 
   const customFields: Record<string, unknown> = {
@@ -343,11 +349,14 @@ export async function submitCompleteApplication(
     location_state: data.location_state,
     us_work_eligible: data.us_work_eligible,
     is_prequalified: isPrequalified,
-    weekly_payment_budget: data.weekly_payment_budget,
+    ownership_goal: data.ownership_goal,  // Target HRC weekly contribution
     truck_preference: data.truck_preference,
     freight_preference: data.freight_preference,
     has_existing_carrier: data.has_existing_carrier,
     carrier_name: data.carrier_name,
+    sms_opt_in: data.sms_opt_in,
+    lead_source: data.lead_source,
+    referral_code: data.referral_code,
     form_step: 4, // Complete
   }
 

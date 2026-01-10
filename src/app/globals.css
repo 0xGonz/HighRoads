@@ -8,8 +8,8 @@
     --foreground: 222.2 84% 4.9%;
     --primary: 210 57% 24%;
     --primary-foreground: 210 40% 98%;
-    --accent: 24 95% 53%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 210 48% 22%;
+    --accent-foreground: 210 40% 98%;
     --radius: 0.5rem;
   }
 }
@@ -60,29 +60,36 @@
   .animate-delay-500 {
     animation-delay: 500ms;
   }
+
+  /* Selection color */
+  ::selection {
+    @apply bg-primary-100 text-primary-900;
+  }
 }
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #f8fafc;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1e3a5f;
-  border-radius: 4px;
+  background: linear-gradient(180deg, #0f2d4a 0%, #1e3a52 100%);
+  border-radius: 5px;
+  border: 2px solid #f8fafc;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #2d5a8a;
+  background: linear-gradient(180deg, #1e3a52 0%, #2d5070 100%);
 }
 
 /* Smooth scroll */
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 80px;
 }
 
 /* Respect reduced motion preferences */
@@ -99,6 +106,42 @@ html {
 
 /* Focus visible for keyboard navigation */
 :focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid #0f2d4a;
   outline-offset: 2px;
+}
+
+/* Custom link underline animation */
+@layer utilities {
+  .link-underline {
+    position: relative;
+  }
+
+  .link-underline::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: currentColor;
+    transition: width 0.3s ease;
+  }
+
+  .link-underline:hover::after {
+    width: 100%;
+  }
+}
+
+/* Gradient text utility */
+@layer utilities {
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r;
+  }
+}
+
+/* Glass effect utility */
+@layer utilities {
+  .glass {
+    @apply bg-white/10 backdrop-blur-md border border-white/20;
+  }
 }
