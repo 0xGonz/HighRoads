@@ -134,7 +134,13 @@ export function ApplicationForm() {
     }
   }
 
-  const handleNext = async () => {
+  const handleNext = async (e?: React.MouseEvent) => {
+    // Explicitly prevent any form submission
+    if (e) {
+      e.preventDefault()
+      e.stopPropagation()
+    }
+
     let fieldsToValidate: (keyof ApplicationFormData)[] = []
 
     switch (currentStep) {
@@ -183,6 +189,14 @@ export function ApplicationForm() {
   }
 
   const onSubmit = async (data: ApplicationFormData) => {
+    // CRITICAL: Only allow submission on the final step (Review)
+    // This prevents accidental submissions from Enter key or other triggers
+    if (currentStep !== STEPS.length) {
+      console.log('Blocked submission - not on final step. Current:', currentStep)
+      return
+    }
+
+    // Only proceed with actual submission on final step
     setIsSubmitting(true)
     setSubmitError(null)
 
@@ -227,7 +241,8 @@ export function ApplicationForm() {
 
       // Set flag so success page knows this is a valid submission
       sessionStorage.setItem('applicationSubmitted', 'true')
-      router.push('/apply/success')
+      // Also pass via URL param as backup (more reliable with Next.js navigation)
+      router.push('/apply/success?submitted=true')
     } catch (error) {
       console.error('Error submitting application:', error)
       // Network error or JSON parse error
