@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { upsertContact, addTags, isGHLConfigured } from '@/lib/ghl'
+import { upsertApplicant, createReferral, isDBConfigured } from '@/lib/db'
 
 export async function POST(request: NextRequest) {
   try {
-    if (!isGHLConfigured()) {
+    if (!isDBConfigured()) {
       return NextResponse.json(
         { error: 'SERVICE_NOT_CONFIGURED', message: 'Referral system is temporarily unavailable' },
         { status: 503 }
@@ -38,43 +38,34 @@ export async function POST(request: NextRequest) {
     const driverFirstName = driverNameParts[0]
     const driverLastName = driverNameParts.slice(1).join(' ') || ''
 
-    // Create or update referrer contact
-    const { contact: referrerContact } = await upsertContact({
-      firstName: referrerFirstName,
-      lastName: referrerLastName,
-      email: referrer_email,
+    // Create or update referrer applicant
+    const { applicant: referrer } = await upsertApplicant({
+      first_name: referrerFirstName,
+      last_name: referrerLastName,
+      email: referrer_email.toLowerCase(),
       phone: referrer_phone,
-      tags: ['referrer', 'source_website'],
-      customFields: {
-        is_referrer: true,
-      },
+      lead_source: 'referral_program',
     })
 
-    // Create referred driver contact
-    const { contact: driverContact } = await upsertContact({
-      firstName: driverFirstName,
-      lastName: driverLastName,
-      email: driver_email || '',
+    // Create referred driver applicant
+    const { applicant: driver } = await upsertApplicant({
+      first_name: driverFirstName,
+      last_name: driverLastName,
+      email: driver_email?.toLowerCase() || `${driver_phone.replace(/\D/g, '')}@pending.highroadcapital.com`,
       phone: driver_phone,
-      tags: ['referred_driver', 'source_referral', `referred_by_${referrerContact.id}`],
-      customFields: {
-        referred_by_name: referrer_name,
-        referred_by_email: referrer_email,
-        referred_by_contact_id: referrerContact.id,
-        referral_relationship: relationship,
-        referral_status: 'pending',
-      },
+      lead_source: 'referral',
+      referral_code: referrer.id,
     })
 
-    // Update referrer with referral count tag
-    await addTags(referrerContact.id, [`has_referral_${driverContact.id}`])
+    // Create referral relationship
+    await createReferral(referrer.id, driver.id, relationship)
 
     return NextResponse.json({
       success: true,
       message: 'Referral submitted successfully',
       data: {
-        referrer_id: referrerContact.id,
-        driver_id: driverContact.id,
+        referrer_id: referrer.id,
+        driver_id: driver.id,
       },
     })
   } catch (error) {

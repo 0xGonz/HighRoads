@@ -1,119 +1,189 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
-import { ExternalLink, Users, BarChart3, MessageSquare, Settings } from 'lucide-react'
-import { Button } from '@/components/ui/Button'
+import { Users, UserCheck, Clock, CheckCircle, ArrowRight, TrendingUp, FileCheck } from 'lucide-react'
+import { AdminLayout } from '@/components/admin/AdminLayout'
+import { StatusBadge } from '@/components/admin/StatusBadge'
+import { getDashboardStats } from '@/lib/db'
+import { getCurrentAdmin } from '@/lib/auth'
+import { redirect } from 'next/navigation'
+import { statusColors } from '@/lib/design-tokens'
 
 export const metadata: Metadata = {
   title: 'Admin Dashboard | High Road Capital LLC',
-  description: 'Admin dashboard - Redirects to GoHighLevel CRM.',
+  description: 'Admin dashboard for managing applicants and applications.',
 }
 
-const GHL_DASHBOARD_URL = 'https://app.gohighlevel.com'
+export const dynamic = 'force-dynamic'
 
-const ghlFeatures = [
-  {
-    title: 'Contact Management',
-    description: 'View, edit, and manage all applicant contacts',
-    icon: Users,
-  },
-  {
-    title: 'Pipeline Tracking',
-    description: 'Track applications through your sales pipeline',
-    icon: BarChart3,
-  },
-  {
-    title: 'Automated Messaging',
-    description: 'Email and SMS automation for follow-ups',
-    icon: MessageSquare,
-  },
-  {
-    title: 'Workflow Automation',
-    description: 'Automated sequences for abandoned forms and nurturing',
-    icon: Settings,
-  },
-]
+export default async function AdminDashboard() {
+  const admin = await getCurrentAdmin()
 
-export default function AdminDashboard() {
+  if (!admin) {
+    redirect('/admin/login')
+  }
+
+  const stats = await getDashboardStats()
+
+  const statCards = [
+    {
+      title: 'Total Applicants',
+      value: stats.total,
+      icon: Users,
+      iconBg: 'bg-gray-100',
+      iconColor: 'text-gray-600',
+    },
+    {
+      title: 'New Applications',
+      value: stats.new,
+      icon: Clock,
+      iconBg: statusColors.new.light,
+      iconColor: statusColors.new.icon,
+    },
+    {
+      title: 'Prequalified',
+      value: stats.prequalified,
+      icon: UserCheck,
+      iconBg: statusColors.complete.light,
+      iconColor: statusColors.complete.icon,
+    },
+    {
+      title: 'Completed',
+      value: stats.complete,
+      icon: CheckCircle,
+      iconBg: 'bg-purple-50',
+      iconColor: 'text-purple-600',
+    },
+  ]
+
   return (
-    <div className="min-h-screen bg-gray-100">
-      <div className="bg-primary-700 text-white py-6">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-2xl font-bold">Admin Dashboard</h1>
-          <p className="text-gray-200 mt-1">Applicant management has moved to GoHighLevel</p>
-        </div>
-      </div>
-
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Main CTA Card */}
-        <div className="bg-white rounded-xl shadow-lg p-8 text-center mb-8">
-          <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-6">
-            <ExternalLink className="h-8 w-8 text-accent" />
-          </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Manage Applicants in GoHighLevel
-          </h2>
-          <p className="text-gray-600 mb-6 max-w-lg mx-auto">
-            All applicant data, pipeline management, and automated follow-ups are now handled
-            through GoHighLevel CRM for a more powerful and integrated experience.
-          </p>
-          <a
-            href={GHL_DASHBOARD_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Button size="lg" className="inline-flex items-center">
-              Open GoHighLevel Dashboard
-              <ExternalLink className="ml-2 h-5 w-5" />
-            </Button>
-          </a>
+    <AdminLayout adminName={admin.name}>
+      <div className="space-y-8">
+        {/* Header */}
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
+          <p className="text-gray-500 mt-1">Welcome back, {admin.name}</p>
         </div>
 
-        {/* Features Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          {ghlFeatures.map((feature) => (
-            <div key={feature.title} className="bg-white rounded-lg shadow p-6">
-              <div className="flex items-start">
-                <div className="bg-primary-100 p-3 rounded-lg">
-                  <feature.icon className="h-6 w-6 text-primary-700" />
+        {/* Stats Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {statCards.map((stat) => (
+            <div
+              key={stat.title}
+              className="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow"
+            >
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-gray-500">{stat.title}</p>
+                  <p className="text-3xl font-bold text-gray-900 mt-1">{stat.value}</p>
                 </div>
-                <div className="ml-4">
-                  <h3 className="font-semibold text-gray-900">{feature.title}</h3>
-                  <p className="text-sm text-gray-500 mt-1">{feature.description}</p>
+                <div className={`p-3 rounded-xl ${stat.iconBg}`}>
+                  <stat.icon className={`h-6 w-6 ${stat.iconColor}`} />
                 </div>
               </div>
             </div>
           ))}
         </div>
 
-        {/* Setup Instructions */}
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
-          <h3 className="font-semibold text-blue-800 mb-3">GHL Setup Checklist</h3>
-          <ul className="space-y-2 text-blue-700 text-sm">
-            <li className="flex items-start">
-              <span className="mr-2">1.</span>
-              Create custom fields for application data (CDL, medical card, experience, etc.)
-            </li>
-            <li className="flex items-start">
-              <span className="mr-2">2.</span>
-              Set up pipeline stages: New → In Progress → Carrier App → Pending → Complete
-            </li>
-            <li className="flex items-start">
-              <span className="mr-2">3.</span>
-              Create workflows for new applications and abandoned form follow-ups
-            </li>
-            <li className="flex items-start">
-              <span className="mr-2">4.</span>
-              Configure email/SMS templates for confirmations and reminders
-            </li>
-          </ul>
-        </div>
+        {/* Quick Actions */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Recent Applications */}
+          <div className="bg-white rounded-xl shadow-sm">
+            <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+              <h2 className="font-semibold text-gray-900">Recent Applications</h2>
+              <Link
+                href="/admin/applicants"
+                className="text-sm text-primary-600 hover:text-primary-700 flex items-center gap-1"
+              >
+                View all
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+            <div className="divide-y divide-gray-100">
+              {stats.recentApplications.length === 0 ? (
+                <div className="px-6 py-8 text-center text-gray-500">
+                  No applications yet
+                </div>
+              ) : (
+                stats.recentApplications.map((applicant) => (
+                  <Link
+                    key={applicant.id}
+                    href={`/admin/applicants/${applicant.id}`}
+                    className="block px-6 py-4 hover:bg-gray-50 transition-colors"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="font-medium text-gray-900">
+                          {applicant.first_name} {applicant.last_name}
+                        </p>
+                        <p className="text-sm text-gray-500">{applicant.email}</p>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <StatusBadge status={applicant.status} size="sm" />
+                        <ArrowRight className="h-4 w-4 text-gray-400" />
+                      </div>
+                    </div>
+                  </Link>
+                ))
+              )}
+            </div>
+          </div>
 
-        {/* Back Link */}
-        <div className="text-center mt-8">
-          <Link href="/" className="text-primary-700 hover:underline">
-            ← Back to Website
-          </Link>
+          {/* Quick Stats by Status */}
+          <div className="bg-white rounded-xl shadow-sm">
+            <div className="px-6 py-4 border-b border-gray-100">
+              <h2 className="font-semibold text-gray-900">Pipeline Overview</h2>
+            </div>
+            <div className="p-6">
+              <div className="space-y-4">
+                <PipelineBar label="New" count={stats.new} total={stats.total} color={statusColors.new.dot} />
+                <PipelineBar label="In Progress" count={stats.inProgress} total={stats.total} color={statusColors.in_progress.dot} />
+                <PipelineBar label="Prequalified" count={stats.prequalified} total={stats.total} color={statusColors.complete.dot} />
+                <PipelineBar label="Completed" count={stats.complete} total={stats.total} color="bg-purple-500" />
+              </div>
+              <div className="mt-6 pt-4 border-t">
+                <Link
+                  href="/admin/pipeline"
+                  className="text-sm text-primary-600 hover:text-primary-700 flex items-center gap-1"
+                >
+                  View pipeline board
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
+    </AdminLayout>
+  )
+}
+
+function PipelineBar({
+  label,
+  count,
+  total,
+  color,
+}: {
+  label: string
+  count: number
+  total: number
+  color: string
+}) {
+  const percentage = total > 0 ? Math.round((count / total) * 100) : 0
+
+  return (
+    <div>
+      <div className="flex items-center justify-between text-sm mb-1.5">
+        <span className="text-gray-600">{label}</span>
+        <div className="flex items-center gap-2">
+          <span className="text-xs text-gray-400">{percentage}%</span>
+          <span className="font-semibold text-gray-900 tabular-nums w-8 text-right">{count}</span>
+        </div>
+      </div>
+      <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+        <div
+          className={`h-full rounded-full transition-all duration-500 ${color}`}
+          style={{ width: `${Math.max(percentage, 2)}%` }}
+        />
       </div>
     </div>
   )

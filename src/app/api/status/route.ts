@@ -1,46 +1,32 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { findContactByEmail, isGHLConfigured } from '@/lib/ghl'
+import { findApplicantByEmail, isDBConfigured } from '@/lib/db'
+import type { ApplicantStatus } from '@/types/database'
 
-// Status mapping from GHL tags to user-friendly status
-const STATUS_MAP: Record<string, { status: string; description: string; step: number }> = {
-  new_application: {
+// Status mapping from database status to user-friendly status
+const STATUS_MAP: Record<ApplicantStatus, { status: string; description: string; step: number }> = {
+  new: {
     status: 'Application Received',
     description: 'We have received your application and it is in our queue for review.',
     step: 1,
   },
-  in_review: {
+  in_progress: {
     status: 'Under Review',
     description: 'Our team is currently reviewing your application and qualifications.',
     step: 2,
   },
-  documents_needed: {
-    status: 'Documents Needed',
-    description: 'We need additional documents to process your application. Check your email for details.',
-    step: 2,
-  },
-  documents_received: {
-    status: 'Documents Received',
-    description: 'We have received your documents and are processing them.',
+  carrier_app: {
+    status: 'Carrier Application',
+    description: 'Your application has been submitted to carrier partners for review.',
     step: 3,
   },
-  approved: {
+  pending: {
+    status: 'Pending Approval',
+    description: 'Your application is pending final approval. We will contact you shortly.',
+    step: 4,
+  },
+  complete: {
     status: 'Approved',
-    description: 'Congratulations! Your application has been approved. We will contact you shortly.',
-    step: 4,
-  },
-  carrier_matching: {
-    status: 'Carrier Matching',
-    description: 'We are matching you with the best carrier partners for your preferences.',
-    step: 4,
-  },
-  carrier_matched: {
-    status: 'Carrier Matched',
-    description: 'You have been matched with a carrier. Check your email for next steps.',
-    step: 5,
-  },
-  active: {
-    status: 'Active Driver',
-    description: 'You are an active driver in our program. Welcome to the High Road family!',
+    description: 'Congratulations! Your application has been approved. Welcome to the High Road family!',
     step: 5,
   },
   disqualified: {
@@ -50,37 +36,9 @@ const STATUS_MAP: Record<string, { status: string; description: string; step: nu
   },
 }
 
-function getStatusFromTags(tags: string[]): { status: string; description: string; step: number } {
-  // Check tags in priority order (most specific first)
-  const priorityOrder = [
-    'active',
-    'carrier_matched',
-    'carrier_matching',
-    'approved',
-    'documents_received',
-    'documents_needed',
-    'in_review',
-    'disqualified',
-    'new_application',
-  ]
-
-  for (const tag of priorityOrder) {
-    if (tags.includes(tag)) {
-      return STATUS_MAP[tag]
-    }
-  }
-
-  // Default status if no matching tags
-  return {
-    status: 'Pending',
-    description: 'Your application is being processed.',
-    step: 1,
-  }
-}
-
 export async function POST(request: NextRequest) {
   try {
-    if (!isGHLConfigured()) {
+    if (!isDBConfigured()) {
       return NextResponse.json(
         { error: 'SERVICE_NOT_CONFIGURED', message: 'Status lookup is temporarily unavailable' },
         { status: 503 }
@@ -97,10 +55,10 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Find contact by email
-    const contact = await findContactByEmail(email)
+    // Find applicant by email
+    const applicant = await findApplicantByEmail(email)
 
-    if (!contact) {
+    if (!applicant) {
       return NextResponse.json(
         { error: 'NOT_FOUND', message: 'No application found with this email address' },
         { status: 404 }
@@ -108,28 +66,24 @@ export async function POST(request: NextRequest) {
     }
 
     // Verify phone number (last 4 digits)
-    const contactPhoneDigits = contact.phone?.replace(/\D/g, '').slice(-4)
-    if (contactPhoneDigits !== phone_last4) {
+    const applicantPhoneDigits = applicant.phone?.replace(/\D/g, '').slice(-4)
+    if (applicantPhoneDigits !== phone_last4) {
       return NextResponse.json(
         { error: 'VERIFICATION_FAILED', message: 'Phone verification failed. Please check your information.' },
         { status: 401 }
       )
     }
 
-    // Get status from tags
-    const statusInfo = getStatusFromTags(contact.tags || [])
-
-    // Get additional info from custom fields
-    const customFields = contact.customFields || {}
-    const isPrequalified = customFields.is_prequalified as boolean | undefined
+    // Get status info
+    const statusInfo = STATUS_MAP[applicant.status] || STATUS_MAP.new
 
     return NextResponse.json({
       success: true,
       data: {
-        firstName: contact.firstName,
+        firstName: applicant.first_name,
         ...statusInfo,
-        isPrequalified,
-        appliedAt: customFields.created_at || null,
+        isPrequalified: applicant.is_prequalified,
+        appliedAt: applicant.created_at,
       },
     })
   } catch (error) {

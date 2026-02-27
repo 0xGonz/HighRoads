@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { submitCompleteApplication, submitPartialApplication, isGHLConfigured } from '@/lib/ghl'
+import { submitCompleteApplication, submitPartialApplication, isDBConfigured, listApplicants } from '@/lib/db'
 import { applicationSchema, checkPrequalification } from '@/lib/validations'
+import { isDemoMode } from '@/lib/demo-data'
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'
@@ -8,14 +9,14 @@ export const dynamic = 'force-dynamic'
 // Error codes for frontend to handle
 const ErrorCodes = {
   SERVICE_NOT_CONFIGURED: 'SERVICE_NOT_CONFIGURED',
-  EXTERNAL_SERVICE_ERROR: 'EXTERNAL_SERVICE_ERROR',
+  DATABASE_ERROR: 'DATABASE_ERROR',
   VALIDATION_ERROR: 'VALIDATION_ERROR',
   INTERNAL_ERROR: 'INTERNAL_ERROR',
 } as const
 
 /**
  * POST /api/applicants
- * Submit a complete or partial application to GoHighLevel
+ * Submit a complete or partial application
  */
 export async function POST(request: NextRequest) {
   try {
@@ -51,9 +52,25 @@ export async function POST(request: NextRequest) {
       us_work_eligible: data.us_work_eligible,
     })
 
-    // Check if GHL is configured - CRITICAL: Do not allow submission without backend
-    if (!isGHLConfigured()) {
-      console.error('CRITICAL: GHL not configured - rejecting application submission')
+    // Demo mode: simulate successful submission
+    if (isDemoMode) {
+      const demoApplicantId = `demo-${Date.now()}`
+      console.log('Demo mode: Simulating application submission for', data.email)
+      return NextResponse.json(
+        {
+          success: true,
+          message: 'Application submitted successfully (Demo Mode)',
+          applicant_id: demoApplicantId,
+          is_prequalified: prequalResult.qualified,
+          demo_mode: true,
+        },
+        { status: 201 }
+      )
+    }
+
+    // Check if database is configured - CRITICAL: Do not allow submission without backend
+    if (!isDBConfigured()) {
+      console.error('CRITICAL: Database not configured - rejecting application submission')
       return NextResponse.json(
         {
           success: false,
@@ -64,18 +81,20 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Submit to GoHighLevel
-    const { contactId, isPrequalified } = await submitCompleteApplication({
+    // Submit to database
+    const { applicantId, isPrequalified } = await submitCompleteApplication({
       first_name: data.first_name,
       last_name: data.last_name,
       email: data.email,
       phone: data.phone,
+      sms_opt_in: data.sms_opt_in,
+      lead_source: data.lead_source,
+      referral_code: data.referral_code,
       has_cdl: data.has_cdl,
       has_medical_card: data.has_medical_card,
       experience_months: data.experience_months,
       location_state: data.location_state,
       us_work_eligible: data.us_work_eligible,
-      is_prequalified: prequalResult.qualified,
       ownership_goal: data.ownership_goal,
       truck_preference: data.truck_preference,
       freight_preference: data.freight_preference,
@@ -87,7 +106,7 @@ export async function POST(request: NextRequest) {
       {
         success: true,
         message: 'Application submitted successfully',
-        contact_id: contactId,
+        applicant_id: applicantId,
         is_prequalified: isPrequalified,
       },
       { status: 201 }
@@ -95,26 +114,14 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Error processing application:', error)
 
-    // Check if this is a GHL API error
     const errorMessage = error instanceof Error ? error.message : 'Unknown error'
-    const isGHLError = errorMessage.includes('GHL') || errorMessage.includes('GoHighLevel')
-
-    if (isGHLError) {
-      return NextResponse.json(
-        {
-          success: false,
-          error: ErrorCodes.EXTERNAL_SERVICE_ERROR,
-          message: 'Unable to process your application right now. Please try again in a few minutes.',
-        },
-        { status: 502 }
-      )
-    }
 
     return NextResponse.json(
       {
         success: false,
-        error: ErrorCodes.INTERNAL_ERROR,
-        message: 'Something went wrong. Please try again.',
+        error: ErrorCodes.DATABASE_ERROR,
+        message: 'Unable to process your application right now. Please try again in a few minutes.',
+        details: process.env.NODE_ENV === 'development' ? errorMessage : undefined,
       },
       { status: 500 }
     )
@@ -124,7 +131,6 @@ export async function POST(request: NextRequest) {
 /**
  * Handle partial form submissions for abandoned form tracking
  * Note: Partial tracking failures should NOT block user experience
- * but we should clearly indicate when tracking is unavailable
  */
 async function handlePartialSubmission(body: {
   step: number
@@ -132,23 +138,23 @@ async function handlePartialSubmission(body: {
   last_name: string
   email: string
   phone: string
-  contactId?: string
+  applicantId?: string
 }) {
   try {
     // Partial tracking is optional - don't block user if not configured
-    if (!isGHLConfigured()) {
+    if (!isDBConfigured()) {
       return NextResponse.json(
         {
           success: false,
           tracked: false,
-          warning: 'Tracking unavailable - CRM not configured',
+          warning: 'Tracking unavailable - database not configured',
           step: body.step,
         },
         { status: 200 }
       )
     }
 
-    const { contactId } = await submitPartialApplication(
+    const { applicantId } = await submitPartialApplication(
       {
         first_name: body.first_name,
         last_name: body.last_name,
@@ -162,7 +168,7 @@ async function handlePartialSubmission(body: {
       {
         success: true,
         tracked: true,
-        contact_id: contactId,
+        applicant_id: applicantId,
         step: body.step,
       },
       { status: 200 }
@@ -170,7 +176,6 @@ async function handlePartialSubmission(body: {
   } catch (error) {
     console.error('Error tracking partial submission:', error)
     // Don't fail the user experience for partial tracking errors
-    // but indicate that tracking failed
     return NextResponse.json(
       {
         success: false,
@@ -185,13 +190,42 @@ async function handlePartialSubmission(body: {
 
 /**
  * GET /api/applicants
- * Note: With GHL integration, applicant data is managed in GHL dashboard
- * This endpoint is kept for backwards compatibility but returns a redirect message
+ * List applicants with filtering and pagination (admin only)
  */
-export async function GET() {
-  return NextResponse.json({
-    message: 'Applicant management has moved to GoHighLevel',
-    redirect: 'Please use the GHL dashboard to view and manage applicants',
-    ghl_dashboard: 'https://app.gohighlevel.com',
-  })
+export async function GET(request: NextRequest) {
+  try {
+    const { searchParams } = new URL(request.url)
+
+    const page = parseInt(searchParams.get('page') || '1')
+    const limit = parseInt(searchParams.get('limit') || '20')
+    const status = searchParams.get('status') as 'new' | 'in_progress' | 'carrier_app' | 'pending' | 'complete' | 'disqualified' | null
+    const search = searchParams.get('search') || undefined
+    const isPrequalified = searchParams.get('prequalified') === 'true' ? true :
+                          searchParams.get('prequalified') === 'false' ? false : undefined
+
+    const { applicants, total } = await listApplicants({
+      page,
+      limit,
+      status: status || undefined,
+      search,
+      isPrequalified,
+    })
+
+    return NextResponse.json({
+      success: true,
+      data: applicants,
+      pagination: {
+        page,
+        limit,
+        total,
+        totalPages: Math.ceil(total / limit),
+      },
+    })
+  } catch (error) {
+    console.error('Error listing applicants:', error)
+    return NextResponse.json(
+      { error: 'INTERNAL_ERROR', message: 'Failed to list applicants' },
+      { status: 500 }
+    )
+  }
 }
